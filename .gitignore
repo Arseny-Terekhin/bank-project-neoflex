@@ -6,6 +6,6 @@
 /httpRequests/
 # Environment-dependent path to Maven home directory
 /mavenHomeManager.xml
-# Datasource local storage ignored files
+# Datasource local storage ignored files.
 /dataSources/
 /dataSources.local.xml
