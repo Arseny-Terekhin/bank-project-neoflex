@@ -17,7 +17,7 @@ public class CreditDto {
     private Boolean isInsuranceEnabled;
     private Boolean isSalaryClient;
 
-    private BigDecimal psk; // полная стоимость кредита
+    private BigDecimal psk;
     private BigDecimal paymentScheduleTotal;
 
     private List<PaymentScheduleElementDto> paymentSchedule;

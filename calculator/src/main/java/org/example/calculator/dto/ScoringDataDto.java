@@ -21,13 +21,14 @@ public class ScoringDataDto {
     @NotBlank
     private String lastName;
 
+    @NotBlank
     @Email
     private String email;
 
-    @Pattern(regexp = "\\+7\\d{10}")
+    @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79**-***-**-**")
     private String phone;
 
-    @Past
+    @NotBlank
     private LocalDate birthdate;
 
     @NotBlank
@@ -47,7 +48,7 @@ public class ScoringDataDto {
     @NotNull
     private Integer dependentAmount;
 
-    @NotNull
+
     private EmploymentDto employment;
 
     private String account;

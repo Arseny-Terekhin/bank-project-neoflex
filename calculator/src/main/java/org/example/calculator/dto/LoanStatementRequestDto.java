@@ -22,10 +22,11 @@ public class LoanStatementRequestDto {
     @NotBlank
     private String lastName;
 
+    @NotBlank
     @Email
     private String email;
 
-    @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79XXXXXXXXX")
+    @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79**-***-**-**")
     private String phone;
 
 }

@@ -27,8 +27,8 @@ public class CalcController {
 
     @PostMapping("/offers")
     public ResponseEntity offersCalc(@RequestBody @Valid LoanStatementRequestDto  loanStatementRequestDto) {
-        List<LoanOfferDto> list = new ArrayList<>();
-        return ResponseEntity.ok(list);
+        List<LoanOfferDto> offers = calculator.getLoanOffers(loanStatementRequestDto);
+        return ResponseEntity.ok(offers);
     }
 
     @PostMapping("/calc")
