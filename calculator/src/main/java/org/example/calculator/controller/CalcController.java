@@ -33,7 +33,7 @@ public class CalcController {
 
     @PostMapping("/calc")
     public ResponseEntity calc(@RequestBody @Valid ScoringDataDto scoringDataDto) {
-        CreditDto creditDto = new CreditDto();
+        CreditDto creditDto = calculator.calculateCredit(scoringDataDto);
         return ResponseEntity.ok(creditDto);
     }
 }

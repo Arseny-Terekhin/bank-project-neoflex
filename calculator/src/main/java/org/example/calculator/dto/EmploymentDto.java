@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 public class EmploymentDto {
 
-    @NotBlank
+    @NotNull
     private EmploymentStatus employmentStatus;
 
     @NotBlank

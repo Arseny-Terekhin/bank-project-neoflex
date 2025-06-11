@@ -1,11 +1,13 @@
 package org.example.calculator.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
 public class LoanStatementRequestDto {
 
     @NotNull
@@ -26,6 +28,7 @@ public class LoanStatementRequestDto {
     @Email
     private String email;
 
+    @NotBlank
     @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79**-***-**-**")
     private String phone;
 

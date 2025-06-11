@@ -2,6 +2,7 @@ package org.example.calculator.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class ScoringDataDto {
     @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79**-***-**-**")
     private String phone;
 
-    @NotBlank
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
 
     @NotBlank
@@ -39,10 +40,10 @@ public class ScoringDataDto {
     @Size(min = 6, max = 6, message = "Номер паспорта должна состоять из 6 цифр")
     private String passportNumber;
 
-    @NotBlank
+    @NotNull
     private Gender gender;
 
-    @NotBlank
+    @NotNull
     private MaritalStatus maritalStatus;
 
     @NotNull
