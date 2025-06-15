@@ -12,6 +12,7 @@ import java.util.List;
 public interface CalculatorService {
 
     List<LoanOfferDto> getLoanOffers(LoanStatementRequestDto  loanStatementRequestDto);
+
     CreditDto calculateCredit(ScoringDataDto  scoringDataDto);
 
 }

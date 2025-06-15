@@ -1,7 +1,7 @@
 package org.example.calculator.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -11,14 +11,11 @@ import java.util.UUID;
 public class LoanOfferDto {
 
     private UUID applicationId;
-
     private BigDecimal requestedAmount;
     private BigDecimal totalAmount;
     private Integer term;
-
     private BigDecimal monthlyPayment;
     private BigDecimal rate;
-
     private boolean isInsuranceEnabled;
     private boolean isSalaryClient;
 }

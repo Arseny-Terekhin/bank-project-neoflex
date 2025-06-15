@@ -2,34 +2,32 @@ package org.example.calculator.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.example.calculator.dto.enums.EmploymentStatus;
 
 import java.math.BigDecimal;
 
 @Data
 public class EmploymentDto {
 
-    @NotNull
+    @NotNull(message = "employmentStatus должен быть заполнен")
     private EmploymentStatus employmentStatus;
 
-    @NotBlank
+    @NotBlank(message = "employerINN должен быть заполнен")
     private String employerINN;
 
-    @NotBlank
+    @NotBlank(message = "position должен быть заполнен")
     private String position;
 
-    @NotBlank
+    @NotBlank(message = "workExperienceTotal должен быть заполнен")
     @Min(1)
     private Integer workExperienceTotal;
+
     @Min(0)
-    @NotBlank
+    @NotBlank(message = "workExperienceCurrent должен быть заполнен")
     private Integer workExperienceCurrent;
 
     @DecimalMin("0.0")
-    @NotBlank
+    @NotBlank(message = "salary должен быть заполнен")
     private BigDecimal salary;
 }
 
-enum EmploymentStatus{
-    EMPLOYED,
-    UNEMPLOYED
-}
