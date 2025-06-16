@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class PaymentScheduleElementDto {
-
     private Integer number;
     private LocalDate date;
     private BigDecimal totalPayment;

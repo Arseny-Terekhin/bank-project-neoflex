@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @Builder
 public class CreditDto {
-
     private BigDecimal amount;
     private Integer term;
     private BigDecimal monthlyPayment;

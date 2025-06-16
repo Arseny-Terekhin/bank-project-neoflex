@@ -12,30 +12,31 @@ import java.time.LocalDate;
 
 public class TestDTO {
     public static ScoringDataDto generateScoringDataDto(){
-        ScoringDataDto dto = new ScoringDataDto();
-        dto.setAmount(new BigDecimal("500000"));
-        dto.setTerm(12);
-        dto.setFirstName("Иван");
-        dto.setLastName("Иванов");
-        dto.setEmail("ivan@example.com");
-        dto.setPhone("+79001234567");
-        dto.setBirthdate(LocalDate.of(1990, 1, 1));
-        dto.setPassportSeries("1234");
-        dto.setPassportNumber("567890");
-        dto.setGender(Gender.MALE);
-        dto.setMaritalStatus(MaritalStatus.MARRIED);
-        dto.setDependentAmount(1);
-        dto.setIsInsuranceEnabled(true);
-        dto.setIsSalaryClient(true);
-        EmploymentDto employment = new EmploymentDto();
-        employment.setEmploymentStatus(EmploymentStatus.EMPLOYED);
-        employment.setEmployerINN("1234567890");
-        employment.setPosition("DEVELOPER");
-        employment.setSalary(new BigDecimal("150000"));
-        employment.setWorkExperienceTotal(60);
-        employment.setWorkExperienceCurrent(24);
-        dto.setEmployment(employment);
-        dto.setAccount("12345678901234567890");
+        ScoringDataDto dto = ScoringDataDto.builder()
+                .amount(new BigDecimal("500000"))
+                .term(12)
+                .firstName("Иван")
+                .lastName("Иванов")
+                .email("ivan@example.com")
+                .phone("+79001234567")
+                .birthdate(LocalDate.of(1990, 1, 1))
+                .passportSeries("1234")
+                .passportNumber("567890")
+                .gender(Gender.MALE)
+                .maritalStatus(MaritalStatus.MARRIED)
+                .dependentAmount(1)
+                .isInsuranceEnabled(true)
+                .isSalaryClient(true)
+                .employment(EmploymentDto.builder()
+                        .employmentStatus(EmploymentStatus.EMPLOYED)
+                        .employerINN("1234567890")
+                        .position("DEVELOPER")
+                        .salary(new BigDecimal("150000"))
+                        .workExperienceCurrent(24)
+                        .workExperienceTotal(60)
+                        .build())
+                .account("12345678901234567890")
+                .build();
         return dto;
     }
 

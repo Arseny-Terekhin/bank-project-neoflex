@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 public class ScoringDataDto {
 
     @NotNull(message = "amount должен быть заполнен")

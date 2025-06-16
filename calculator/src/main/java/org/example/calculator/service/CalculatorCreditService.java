@@ -36,7 +36,8 @@ public class CalculatorCreditService implements CalculatorService {
             }
         }
 
-        return offers.stream().sorted(Comparator.comparing(LoanOfferDto::getRate)) // от худшего к лучшему
+        return offers.stream()
+                .sorted(Comparator.comparing(LoanOfferDto::getRate))
                 .collect(Collectors.toList());
     }
 
@@ -65,6 +66,7 @@ public class CalculatorCreditService implements CalculatorService {
         return offer;
     }
 
+
     @Override
     public CreditDto calculateCredit(ScoringDataDto scoringDataDto) {
         BigDecimal rate = baseRate;
@@ -79,7 +81,9 @@ public class CalculatorCreditService implements CalculatorService {
         List<PaymentScheduleElementDto> schedule = generatePaymentSchedule(totalAmount, rate, scoringDataDto.getTerm());
 
         BigDecimal psk = monthlyPayment.multiply(BigDecimal.valueOf(scoringDataDto.getTerm())).divide(scoringDataDto.getAmount(), 2, RoundingMode.HALF_UP);
-        BigDecimal totalSchedule = schedule.stream().map(PaymentScheduleElementDto::getTotalPayment).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalSchedule = schedule.stream()
+                .map(PaymentScheduleElementDto::getTotalPayment)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return CreditDto.builder()
                 .amount(scoringDataDto.getAmount())
@@ -92,6 +96,7 @@ public class CalculatorCreditService implements CalculatorService {
                 .paymentScheduleTotal(totalSchedule)
                 .build();
     }
+
 
     private List<PaymentScheduleElementDto> generatePaymentSchedule(BigDecimal amount, BigDecimal rate, int term) {
         List<PaymentScheduleElementDto> schedule = new ArrayList<>();

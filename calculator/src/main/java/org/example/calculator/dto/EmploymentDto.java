@@ -1,12 +1,14 @@
 package org.example.calculator.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 import org.example.calculator.dto.enums.EmploymentStatus;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
 public class EmploymentDto {
 
     @NotNull(message = "employmentStatus должен быть заполнен")

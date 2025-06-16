@@ -9,7 +9,6 @@ import java.util.UUID;
 @Data
 @Builder
 public class LoanOfferDto {
-
     private UUID applicationId;
     private BigDecimal requestedAmount;
     private BigDecimal totalAmount;
