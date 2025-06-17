@@ -2,8 +2,8 @@ package org.example.calculator.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.calculator.dto.*;
+import org.example.calculator.util.interfaces.CalculatorService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,6 +23,9 @@ public class CalculatorCreditService implements CalculatorService {
 
     @Value("${loan.base-rate}")
     private BigDecimal baseRate;
+
+    @Value("${insurance.cost}")
+    private BigDecimal baseInsuranceCost;
 
 
     @Override
@@ -47,7 +50,7 @@ public class CalculatorCreditService implements CalculatorService {
 
         BigDecimal insuranceCost = BigDecimal.ZERO;
         rate = calc.calculateRate(insurance, salaryClient, rate);
-        if (insurance) {insuranceCost = BigDecimal.valueOf(100000);}
+        if (insurance) {insuranceCost = insuranceCost.add(baseInsuranceCost) ;}
 
         BigDecimal totalAmount = request.getAmount().add(insuranceCost);
         BigDecimal monthlyPayment = calc.calculateMonthlyPayment(totalAmount, rate, request.getTerm());
@@ -73,7 +76,7 @@ public class CalculatorCreditService implements CalculatorService {
         BigDecimal totalAmount = BigDecimal.ZERO;
 
         rate = calc.calculateRate(scoringDataDto.getIsInsuranceEnabled(), scoringDataDto.getIsSalaryClient(), rate );
-        if (scoringDataDto.getIsInsuranceEnabled()) {totalAmount = BigDecimal.valueOf(100000);}
+        if (scoringDataDto.getIsInsuranceEnabled()) {totalAmount = totalAmount.add(baseInsuranceCost);}
 
         totalAmount = totalAmount.add(scoringDataDto.getAmount());
         BigDecimal monthlyPayment = calc.calculateMonthlyPayment(totalAmount, rate, scoringDataDto.getTerm());

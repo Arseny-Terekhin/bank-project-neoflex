@@ -7,7 +7,7 @@ import org.example.calculator.dto.CreditDto;
 import org.example.calculator.dto.LoanOfferDto;
 import org.example.calculator.dto.LoanStatementRequestDto;
 import org.example.calculator.dto.ScoringDataDto;
-import org.example.calculator.service.CalculatorService;
+import org.example.calculator.util.interfaces.CalculatorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -14,9 +14,11 @@ import java.time.LocalDate;
 public class ScoringDataDto {
 
     @NotNull(message = "amount должен быть заполнен")
+    @DecimalMin(value = "20000", message = "Сумма кредита должна быть не менее 20 000")
     private BigDecimal amount;
 
     @NotNull(message = "term должен быть заполнен")
+    @Min(value = 6, message = "Срок кредита должен быть не менее 6 месяцев")
     private Integer term;
 
     @NotBlank(message = "firstName должен быть заполнен")
@@ -26,7 +28,7 @@ public class ScoringDataDto {
     private String lastName;
 
     @NotBlank(message = "email должен быть заполнен")
-    @Email(message = "email введен не коректно")
+    @Pattern(regexp = "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$", message = "email введен не коректно")
     private String email;
 
     @NotBlank(message = "phone должен быть заполнен")
@@ -36,7 +38,6 @@ public class ScoringDataDto {
     @NotNull(message = "birthdate должен быть заполнен")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
-
     @NotBlank(message = "passportSeries должен быть заполнен")
     @Size(min = 4, max = 4, message = "Серия паспорта должна состоять из 4 цифр")
     private String passportSeries;

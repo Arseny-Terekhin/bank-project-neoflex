@@ -25,7 +25,7 @@ public class LoanStatementRequestDto {
     private String lastName;
 
     @NotBlank(message = "email должен быть заполнен")
-    @Email(message = "email введен не коректно")
+    @Pattern(regexp = "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$", message = "email введен не коректно")
     private String email;
 
     @NotBlank(message = "phone должен быть заполнен")

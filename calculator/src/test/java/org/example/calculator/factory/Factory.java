@@ -1,4 +1,4 @@
-package org.example.calculator;
+package org.example.calculator.factory;
 
 import org.example.calculator.dto.EmploymentDto;
 import org.example.calculator.dto.LoanStatementRequestDto;
@@ -10,7 +10,7 @@ import org.example.calculator.dto.enums.MaritalStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class TestDTO {
+public class Factory {
     public static ScoringDataDto generateScoringDataDto(){
         ScoringDataDto dto = ScoringDataDto.builder()
                 .amount(new BigDecimal("500000"))
