@@ -1,6 +1,6 @@
 package org.example.calculator.tests;
 
-import org.example.calculator.service.Calculator;
+import org.example.calculator.service.utils.Calculator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

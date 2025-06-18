@@ -4,8 +4,8 @@ import org.example.calculator.dto.CreditDto;
 import org.example.calculator.dto.LoanOfferDto;
 import org.example.calculator.dto.LoanStatementRequestDto;
 import org.example.calculator.dto.ScoringDataDto;
-import org.example.calculator.factory.Factory;
-import org.example.calculator.service.CalculatorCreditService;
+import org.example.calculator.utils.TestUtils;
+import org.example.calculator.service.impl.CalculatorCreditService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public class ServiceTest {
 
     @Test
     void createOfferTest_1_OkStatus(){
-        LoanStatementRequestDto dto = Factory.generateLoanStatementRequestDtoForTest_1();
+        LoanStatementRequestDto dto = TestUtils.generateLoanStatementRequestDtoForTest_1();
 
         LoanOfferDto test = calculatorCreditService.createOffer(dto, true, true);
 
@@ -38,7 +38,7 @@ public class ServiceTest {
 
     @Test
     void getLoanOffersTest_1_OkStatus(){
-        LoanStatementRequestDto dto = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto dto = TestUtils.generateLoanStatementRequestDto();
 
         List<LoanOfferDto> test = calculatorCreditService.getLoanOffers(dto);
 
@@ -52,7 +52,7 @@ public class ServiceTest {
 
     @Test
     void calculateCreditTest_1_OkStatus(){
-        ScoringDataDto test =Factory.generateScoringDataDto();
+        ScoringDataDto test = TestUtils.generateScoringDataDto();
 
         CreditDto credit = calculatorCreditService.calculateCredit(test);
         System.out.println(credit);

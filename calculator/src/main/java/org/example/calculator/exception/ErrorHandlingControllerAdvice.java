@@ -2,8 +2,8 @@ package org.example.calculator.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.example.calculator.util.validation.ValidationErrorResponse;
-import org.example.calculator.util.validation.Violation;
+import org.example.calculator.exception.validation.ValidationErrorResponse;
+import org.example.calculator.exception.validation.Violation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package org.example.calculator.util.doc;
+package org.example.calculator.config;
 
 import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.OpenAPI;

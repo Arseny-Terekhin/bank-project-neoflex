@@ -1,4 +1,4 @@
-package org.example.calculator.util.validation;
+package org.example.calculator.exception.validation;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

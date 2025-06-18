@@ -3,14 +3,14 @@ package org.example.calculator.tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.example.calculator.factory.Factory;
+import org.example.calculator.utils.TestUtils;
 import org.example.calculator.controller.CalcController;
 import org.example.calculator.dto.CreditDto;
 import org.example.calculator.dto.LoanOfferDto;
 import org.example.calculator.dto.LoanStatementRequestDto;
 import org.example.calculator.dto.ScoringDataDto;
 import org.example.calculator.exception.ErrorHandlingControllerAdvice;
-import org.example.calculator.util.interfaces.CalculatorService;
+import org.example.calculator.service.CalculatorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,7 +58,7 @@ public class ControllerTest {
 
     @Test
     void offersTest_OkRequest() throws Exception {
-        LoanStatementRequestDto request = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
 
         String requestBody = objectMapper.writeValueAsString(request);
         List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
@@ -76,7 +76,7 @@ public class ControllerTest {
 
     @Test
     void offersTest_2_BadRequest_ValidMin() throws Exception {
-        LoanStatementRequestDto request = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
         request.setTerm(3);
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -96,7 +96,7 @@ public class ControllerTest {
 
     @Test
     void offersTest_3_BadRequest_ValidDecimalMin() throws Exception {
-        LoanStatementRequestDto request = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
         request.setAmount(BigDecimal.valueOf(1));
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -116,7 +116,7 @@ public class ControllerTest {
 
     @Test
     void offersTest_4_BadRequest_ValidEmail() throws Exception {
-        LoanStatementRequestDto request = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
         request.setEmail("123");
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -136,7 +136,7 @@ public class ControllerTest {
 
     @Test
     void offersTest_5_BadRequest_ValidPhone() throws Exception {
-        LoanStatementRequestDto request = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
         request.setPhone("123");
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -156,7 +156,7 @@ public class ControllerTest {
 
     @Test
     void offersTest_6_BadRequest_ValidNotNull() throws Exception {
-        LoanStatementRequestDto request = Factory.generateLoanStatementRequestDto();
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
         request.setPhone(null);
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -176,7 +176,7 @@ public class ControllerTest {
 
     @Test
     void calcTest_1_OkRequest() throws Exception {
-        ScoringDataDto data = Factory.generateScoringDataDto();
+        ScoringDataDto data = TestUtils.generateScoringDataDto();
         CreditDto result = CreditDto.builder()
                 .amount(data.getAmount())
                 .term(data.getTerm())
@@ -190,14 +190,13 @@ public class ControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
-                .andDo(resul -> System.out.println("Response: " + resul.getResponse().getContentAsString()))
                 .andExpect(jsonPath("$.amount").value(data.getAmount()))
                 .andExpect(jsonPath("$.term").value(data.getTerm()));
     }
 
     @Test
     void calcTest_2_BadRequest_ValidSize() throws Exception {
-        ScoringDataDto data = Factory.generateScoringDataDto();
+        ScoringDataDto data = TestUtils.generateScoringDataDto();
         data.setPassportSeries("111");
         CreditDto result = CreditDto.builder()
                 .amount(data.getAmount())
@@ -218,7 +217,7 @@ public class ControllerTest {
 
     @Test
     void calcTest_3_BadRequest_ValidNotNull() throws Exception {
-        ScoringDataDto data = Factory.generateScoringDataDto();
+        ScoringDataDto data = TestUtils.generateScoringDataDto();
         data.setPassportSeries(null);
         CreditDto result = CreditDto.builder()
                 .amount(data.getAmount())
@@ -239,7 +238,7 @@ public class ControllerTest {
 
     @Test
     void calcTest_4_BadRequest_ValidPhone() throws Exception {
-        ScoringDataDto data = Factory.generateScoringDataDto();
+        ScoringDataDto data = TestUtils.generateScoringDataDto();
         data.setPhone("asd");
         CreditDto result = CreditDto.builder()
                 .amount(data.getAmount())
@@ -260,7 +259,7 @@ public class ControllerTest {
 
     @Test
     void calcTest_5_BadRequest_ValidEmail() throws Exception {
-        ScoringDataDto data = Factory.generateScoringDataDto();
+        ScoringDataDto data = TestUtils.generateScoringDataDto();
         data.setEmail("asdasd");
         CreditDto result = CreditDto.builder()
                 .amount(data.getAmount())

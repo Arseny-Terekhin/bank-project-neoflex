@@ -1,4 +1,4 @@
-package org.example.calculator.util.interfaces;
+package org.example.calculator.service;
 
 import org.example.calculator.dto.CreditDto;
 import org.example.calculator.dto.LoanOfferDto;
