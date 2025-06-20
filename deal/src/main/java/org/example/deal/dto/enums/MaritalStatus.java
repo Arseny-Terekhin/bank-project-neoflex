@@ -1,4 +1,4 @@
-package org.example.calculator.dto.enums;
+package org.example.deal.dto.enums;
 
 public enum MaritalStatus {
     SINGLE,

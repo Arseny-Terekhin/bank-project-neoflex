@@ -38,6 +38,7 @@ public class ScoringDataDto {
     @NotNull(message = "birthdate должен быть заполнен")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
+
     @NotBlank(message = "passportSeries должен быть заполнен")
     @Size(min = 4, max = 4, message = "Серия паспорта должна состоять из 4 цифр")
     private String passportSeries;
