@@ -2,11 +2,16 @@ package org.example.calculator.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class LoanStatementRequestDto {
 
@@ -24,12 +29,23 @@ public class LoanStatementRequestDto {
     @NotBlank(message = "lastName должен быть заполнен")
     private String lastName;
 
+    @NotBlank(message = "middleName должен быть заполнен")
+    private String middleName;
+
     @NotBlank(message = "email должен быть заполнен")
     @Pattern(regexp = "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$", message = "email введен не коректно")
     private String email;
 
-    @NotBlank(message = "phone должен быть заполнен")
-    @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79**-***-**-**")
-    private String phone;
+    @NotNull(message = "birthdate должен быть заполнен")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate birthdate;
+
+    @NotBlank(message = "passportSeries должен быть заполнен")
+    @Size(min = 4, max = 4, message = "Серия паспорта должна состоять из 4 цифр")
+    private String passportSeries;
+
+    @NotBlank(message = "passportNumber должен быть заполнен")
+    @Size(min = 6, max = 6, message = "Номер паспорта должна состоять из 6 цифр")
+    private String passportNumber;
 
 }

@@ -1,13 +1,16 @@
 package org.example.calculator.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+import org.example.calculator.dto.enums.EmploymentPosition;
 import org.example.calculator.dto.enums.EmploymentStatus;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class EmploymentDto {
 
@@ -17,8 +20,8 @@ public class EmploymentDto {
     @NotBlank(message = "employerINN должен быть заполнен")
     private String employerINN;
 
-    @NotBlank(message = "position должен быть заполнен")
-    private String position;
+    @NotNull(message = "position должен быть заполнен")
+    private EmploymentPosition position;
 
     @NotBlank(message = "workExperienceTotal должен быть заполнен")
     @Min(1)

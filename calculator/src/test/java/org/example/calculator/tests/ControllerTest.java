@@ -134,30 +134,11 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.violations[0].message").value("email введен не коректно"));
     }
 
-    @Test
-    void offersTest_5_BadRequest_ValidPhone() throws Exception {
-        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
-        request.setPhone("123");
-
-        String requestBody = objectMapper.writeValueAsString(request);
-
-        List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
-        loanOfferDtoList.add(LoanOfferDto.builder().rate(BigDecimal.valueOf(17)).build());
-
-        Mockito.lenient().when(creditService.getLoanOffers(request)).thenReturn(loanOfferDtoList);
-
-        mockMvc.perform(post("/calculator/offers")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.violations[0].fieldName").value("phone"))
-                .andExpect(jsonPath("$.violations[0].message").value("Телефон должен быть в формате +79**-***-**-**"));
-    }
 
     @Test
     void offersTest_6_BadRequest_ValidNotNull() throws Exception {
         LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
-        request.setPhone(null);
+        request.setEmail(null);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
@@ -170,8 +151,8 @@ public class ControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.violations[0].fieldName").value("phone"))
-                .andExpect(jsonPath("$.violations[0].message").value("phone должен быть заполнен"));
+                .andExpect(jsonPath("$.violations[0].fieldName").value("email"))
+                .andExpect(jsonPath("$.violations[0].message").value("email должен быть заполнен"));
     }
 
     @Test
@@ -236,46 +217,5 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.violations[0].message").value("passportSeries должен быть заполнен"));
     }
 
-    @Test
-    void calcTest_4_BadRequest_ValidPhone() throws Exception {
-        ScoringDataDto data = TestUtils.generateScoringDataDto();
-        data.setPhone("asd");
-        CreditDto result = CreditDto.builder()
-                .amount(data.getAmount())
-                .term(data.getTerm())
-                .build();
-
-        String requestBody = objectMapper.writeValueAsString(data);
-
-        Mockito.lenient().when(creditService.calculateCredit(any())).thenReturn(result);
-
-        mockMvc.perform(post("/calculator/calc")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.violations[0].fieldName").value("phone"))
-                .andExpect(jsonPath("$.violations[0].message").value("Телефон должен быть в формате +79**-***-**-**"));
-    }
-
-    @Test
-    void calcTest_5_BadRequest_ValidEmail() throws Exception {
-        ScoringDataDto data = TestUtils.generateScoringDataDto();
-        data.setEmail("asdasd");
-        CreditDto result = CreditDto.builder()
-                .amount(data.getAmount())
-                .term(data.getTerm())
-                .build();
-
-        String requestBody = objectMapper.writeValueAsString(data);
-
-        Mockito.lenient().when(creditService.calculateCredit(any())).thenReturn(result);
-
-        mockMvc.perform(post("/calculator/calc")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.violations[0].fieldName").value("email"))
-                .andExpect(jsonPath("$.violations[0].message").value("email введен не коректно"));
-    }
 
 }

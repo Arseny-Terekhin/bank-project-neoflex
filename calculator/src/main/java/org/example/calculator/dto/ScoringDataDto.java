@@ -9,7 +9,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ScoringDataDto {
 
@@ -27,13 +30,8 @@ public class ScoringDataDto {
     @NotBlank(message = "lastName должен быть заполнен")
     private String lastName;
 
-    @NotBlank(message = "email должен быть заполнен")
-    @Pattern(regexp = "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$", message = "email введен не коректно")
-    private String email;
-
-    @NotBlank(message = "phone должен быть заполнен")
-    @Pattern(regexp = "\\+79\\d{9}", message = "Телефон должен быть в формате +79**-***-**-**")
-    private String phone;
+    @NotBlank(message = "middleName должен быть заполнен")
+    private String middleName;
 
     @NotNull(message = "birthdate должен быть заполнен")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -46,6 +44,13 @@ public class ScoringDataDto {
     @NotBlank(message = "passportNumber должен быть заполнен")
     @Size(min = 6, max = 6, message = "Номер паспорта должна состоять из 6 цифр")
     private String passportNumber;
+
+    @NotNull(message = "passportIssueDate должен быть заполнен")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate passportIssueDate;
+
+    @NotNull(message = "passportIssueBranch должен быть заполнен")
+    private String passportIssueBranch;
 
     @NotNull(message = "gender должен быть заполнен")
     private Gender gender;
