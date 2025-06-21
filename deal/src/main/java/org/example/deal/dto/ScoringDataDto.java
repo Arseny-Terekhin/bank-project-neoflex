@@ -2,6 +2,8 @@ package org.example.deal.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.example.deal.dto.enums.Gender;
+import org.example.deal.dto.enums.MaritalStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoanStatementRequestDto {
+public class ScoringDataDto {
 
     @NotNull(message = "amount должен быть заполнен")
     @DecimalMin(value = "20000", message = "Сумма кредита должна быть не менее 20 000")
@@ -31,10 +33,6 @@ public class LoanStatementRequestDto {
     @NotBlank(message = "middleName должен быть заполнен")
     private String middleName;
 
-    @NotBlank(message = "email должен быть заполнен")
-    @Pattern(regexp = "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$", message = "email введен не коректно")
-    private String email;
-
     @NotNull(message = "birthdate должен быть заполнен")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
@@ -47,4 +45,32 @@ public class LoanStatementRequestDto {
     @Size(min = 6, max = 6, message = "Номер паспорта должна состоять из 6 цифр")
     private String passportNumber;
 
+    @NotNull(message = "passportIssueDate должен быть заполнен")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate passportIssueDate;
+
+    @NotNull(message = "passportIssueBranch должен быть заполнен")
+    private String passportIssueBranch;
+
+    @NotNull(message = "gender должен быть заполнен")
+    private Gender gender;
+
+    @NotNull(message = "maritalStatus должен быть заполнен")
+    private MaritalStatus maritalStatus;
+
+    @NotNull(message = "dependentAmount должен быть заполнен")
+    private Integer dependentAmount;
+
+    @NotNull(message = "employment должен быть заполнен")
+    private EmploymentDto employment;
+
+    @NotNull(message = "account должен быть заполнен")
+    private String account;
+
+    @NotNull(message = "isInsuranceEnabled должен быть заполнен")
+    private Boolean isInsuranceEnabled;
+
+    @NotNull(message = "isSalaryClient должен быть заполнен")
+    private Boolean isSalaryClient;
 }
+

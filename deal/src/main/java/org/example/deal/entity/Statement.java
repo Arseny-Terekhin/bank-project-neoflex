@@ -4,8 +4,8 @@ import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.deal.dto.LoanOfferDto;
+import org.example.deal.dto.StatementStatusHistoryDto;
 import org.example.deal.dto.enums.ApplicationStatus;
-import org.example.deal.entity.pojo.StatusHistory;
 import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
@@ -31,18 +31,21 @@ public class Statement {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+    @Column(name = "sign_data")
+    private LocalDateTime signData;
+
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb", name = "applied_offer")
-    private List<LoanOfferDto>  loanOffers;
+    private LoanOfferDto  loanOffer;
 
-    //я не знаю какого типа должен быть этот параметр
-    //private ses_code
+    @Column(name = "ses_code")
+    private Integer sesCode;
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb", name = "status_history")
-    private List<StatusHistory> statusHistory;
+    private List<StatementStatusHistoryDto> statusHistory;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "credit_id")
     private Credit credit;
 

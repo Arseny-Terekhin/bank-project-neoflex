@@ -28,7 +28,7 @@ public class CalcController {
 
 
     @PostMapping("/offers")
-    public ResponseEntity offersCalc(@RequestBody @Valid LoanStatementRequestDto loanStatementRequestDto) {
+    public ResponseEntity<List<LoanOfferDto>> offersCalc(@RequestBody @Valid LoanStatementRequestDto loanStatementRequestDto) {
         log.info("Start generate offers, request body: {}", loanStatementRequestDto);
 
         List<LoanOfferDto> offers = calculator.getLoanOffers(loanStatementRequestDto);
@@ -38,7 +38,7 @@ public class CalcController {
     }
 
     @PostMapping("/calc")
-    public ResponseEntity calc(@RequestBody @Valid ScoringDataDto scoringDataDto) {
+    public ResponseEntity<CreditDto> calc(@RequestBody @Valid ScoringDataDto scoringDataDto) {
         log.info("Start calculation, request body: {}", scoringDataDto);
 
         CreditDto creditDto = calculator.calculateCredit(scoringDataDto);

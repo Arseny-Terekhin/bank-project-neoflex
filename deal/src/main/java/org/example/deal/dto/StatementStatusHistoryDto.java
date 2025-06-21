@@ -1,6 +1,7 @@
-package org.example.deal.entity.pojo;
+package org.example.deal.dto;
 
 import lombok.*;
+import org.example.deal.dto.enums.ApplicationStatus;
 import org.example.deal.dto.enums.ChangeType;
 
 import java.time.LocalDateTime;
@@ -10,8 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StatusHistory {
-    private String status;
+public class StatementStatusHistoryDto {
+    private ApplicationStatus status;
     private LocalDateTime time;
     private ChangeType changeType;
 }

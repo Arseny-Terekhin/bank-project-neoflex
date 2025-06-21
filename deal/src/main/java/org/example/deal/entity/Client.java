@@ -3,9 +3,9 @@ package org.example.deal.entity;
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.deal.dto.EmploymentDto;
 import org.example.deal.dto.enums.Gender;
 import org.example.deal.dto.enums.MaritalStatus;
-import org.example.deal.entity.pojo.Employment;
 import org.example.deal.entity.pojo.Passport;
 import org.hibernate.annotations.Type;
 
@@ -55,7 +55,7 @@ public class Client {
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb")
-    private Employment  employment;
+    private EmploymentDto employment;
 
     @Column(name = "account_number")
     private String accountNumber;
