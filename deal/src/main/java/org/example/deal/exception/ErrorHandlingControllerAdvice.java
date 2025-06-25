@@ -1,10 +1,12 @@
 package org.example.deal.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.deal.exception.validation.ValidationErrorResponse;
 import org.example.deal.exception.validation.Violation;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,5 +47,13 @@ public class ErrorHandlingControllerAdvice {
                 .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
                 .collect(Collectors.toList());
         return new ValidationErrorResponse(violations);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public SimpleErrorResponse onEntityNotFoundException(EntityNotFoundException e) {
+        log.error("Entity not found: {}", e.getMessage(), e);
+        return new SimpleErrorResponse("Entity not found", e.getMessage());
     }
 }

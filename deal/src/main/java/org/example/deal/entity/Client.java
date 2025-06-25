@@ -40,7 +40,7 @@ public class Client {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    private Gender getter;
+    private Gender gender;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "marital_status")

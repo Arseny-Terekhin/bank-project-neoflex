@@ -39,7 +39,7 @@ public class Statement {
     private LoanOfferDto  loanOffer;
 
     @Column(name = "ses_code")
-    private Integer sesCode;
+    private String sesCode;
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb", name = "status_history")

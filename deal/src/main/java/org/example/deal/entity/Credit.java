@@ -36,9 +36,9 @@ public class Credit {
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb", name = "payment_schedule")
-    private List<PaymentScheduleElementDto>  paymentSchedule;
+    private List<PaymentScheduleElementDto> paymentSchedule;
 
-    @Column(name ="insurance_enabled")
+    @Column(name = "insurance_enabled")
     private boolean isInsuranceEnabled;
 
     @Column(name = "salary_client")
@@ -47,10 +47,6 @@ public class Credit {
     @Enumerated(EnumType.STRING)
     @Column(name = "credit_status")
     private CreditStatus creditStatus;
-
-
-
-
 
 
 }
