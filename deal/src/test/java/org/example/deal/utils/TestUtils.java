@@ -1,28 +1,18 @@
-package org.example.deal;
+package org.example.deal.utils;
 
 import org.example.deal.dto.*;
 import org.example.deal.dto.enums.EmploymentPosition;
 import org.example.deal.dto.enums.EmploymentStatus;
 import org.example.deal.dto.enums.Gender;
 import org.example.deal.dto.enums.MaritalStatus;
-import org.example.deal.service.utils.CalcClient;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
-@SpringBootTest
-class DealApplicationTests {
+public class TestUtils {
 
-    @Autowired
-    CalcClient calcClient;
-
-    @Test
-    void contextLoads() {
-        LoanStatementRequestDto dto = LoanStatementRequestDto.builder()
+    public static LoanStatementRequestDto generateLoanStatementRequestDto(){
+        return LoanStatementRequestDto.builder()
                 .amount(new BigDecimal("300000"))
                 .term(6)
                 .firstName("Алексей")
@@ -33,10 +23,42 @@ class DealApplicationTests {
                 .passportNumber("567890")
                 .birthdate(LocalDate.of(2000, 1, 1))
                 .build();
-        List<LoanOfferDto> offers = calcClient.getOfferFromTheRequest(dto);
-        offers.stream().forEach(System.out::println);
+    }
 
-        ScoringDataDto cdto = ScoringDataDto.builder()
+    public static LoanOfferDto generateLoanOfferDto(){
+        return LoanOfferDto.builder()
+                .rate(BigDecimal.valueOf(17))
+                .isInsuranceEnabled(true)
+                .isSalaryClient(true)
+                .statementId(1)
+                .monthlyPayment(BigDecimal.valueOf(15000))
+                .requestedAmount(BigDecimal.valueOf(30000))
+                .totalAmount(BigDecimal.valueOf(130000))
+                .term(6)
+                .build();
+    }
+
+    public static FinishRegistrationRequestDto generateFinishRegistrationRequestDto(){
+        return FinishRegistrationRequestDto.builder()
+                .accountNumber("qwerqweqr")
+                .dependentAmount(BigDecimal.valueOf(30000))
+                .gender(Gender.MALE)
+                .maritalStatus(MaritalStatus.MARRIED)
+                .passportIssueDate(LocalDate.of(2000, 1, 1))
+                .passportIssueBrach("qqqq")
+                .employment(EmploymentDto.builder()
+                        .employmentStatus(EmploymentStatus.EMPLOYED)
+                        .employerINN("1234567890")
+                        .position(EmploymentPosition.MID_MANAGER)
+                        .salary(new BigDecimal("150000"))
+                        .workExperienceCurrent(24)
+                        .workExperienceTotal(60)
+                        .build())
+                .build();
+    }
+
+    public static ScoringDataDto generateScoringDataDto(){
+        ScoringDataDto dto = ScoringDataDto.builder()
                 .amount(new BigDecimal("500000"))
                 .term(12)
                 .firstName("Иван")
@@ -62,10 +84,8 @@ class DealApplicationTests {
                 .passportIssueBranch("1234")
                 .passportIssueDate(LocalDate.of(2000, 1, 1))
                 .build();
-
-        CreditDto creditDto = calcClient.getCreditFromTheRequest(cdto);
-
-        System.out.println(creditDto);
+        return dto;
     }
+
 
 }

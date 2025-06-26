@@ -1,6 +1,8 @@
 package org.example.deal.controller;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.deal.dto.FinishRegistrationRequestDto;
@@ -45,7 +47,7 @@ public class DealController {
 
     @PostMapping("/calculate/{statementId}")
     public ResponseEntity<Void> calculate(
-            @PathVariable Long statementId,
+            @PathVariable @Min(value = 1, message = "statementId должен быть больше 0")  @Schema(example= "1") Long statementId,
             @RequestBody @Valid FinishRegistrationRequestDto finishDto) {
         log.info("Start calculate credit, request statementId: {}", statementId );
 

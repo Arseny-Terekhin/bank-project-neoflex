@@ -30,11 +30,11 @@ public class EmploymentDto {
     @Min(1)
     private Integer workExperienceTotal;
 
-    @Min(0)
+    @Min(1)
     @NotBlank(message = "workExperienceCurrent должен быть заполнен")
     private Integer workExperienceCurrent;
 
-    @DecimalMin("0.0")
+    @DecimalMin("1.0")
     @NotBlank(message = "salary должен быть заполнен")
     private BigDecimal salary;
 }

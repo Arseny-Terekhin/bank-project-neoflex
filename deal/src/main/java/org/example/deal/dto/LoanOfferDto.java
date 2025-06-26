@@ -17,6 +17,7 @@ import java.util.UUID;
 public class LoanOfferDto {
 
     @NotNull(message = "statementId должен быть заполнен")
+    @Min(value = 1, message = "statementId должен быть больше 0")
     private long statementId;
 
     @NotNull(message = "requestedAmount должен быть заполнен")
@@ -32,11 +33,11 @@ public class LoanOfferDto {
     private Integer term;
 
     @NotNull(message = "monthlyPayment должен быть заполнен")
-    @Positive(message = "monthlyPayment должен быть больше 0")
+    @Min(value = 1, message = "monthlyPayment должен быть не менее 1")
     private BigDecimal monthlyPayment;
 
     @NotNull(message = "rate должен быть заполнен")
-    @Positive(message = "rate должен быть больше 0")
+    @Min(value = 1, message = "rate должен быть больше 0")
     private BigDecimal rate;
 
     @NotNull(message = "isInsuranceEnabled должен быть заполнен")
