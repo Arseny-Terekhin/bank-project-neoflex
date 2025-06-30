@@ -47,7 +47,7 @@ public class DealController {
 
     @PostMapping("/calculate/{statementId}")
     public ResponseEntity<Void> calculate(
-            @PathVariable @Min(value = 1, message = "statementId должен быть больше 0")  @Schema(example= "1") Long statementId,
+            @PathVariable @Min(value = 1, message = "statementId должен быть больше 0") Long statementId,
             @RequestBody @Valid FinishRegistrationRequestDto finishDto) {
         log.info("Start calculate credit, request statementId: {}", statementId );
 

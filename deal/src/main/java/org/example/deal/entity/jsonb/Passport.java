@@ -1,4 +1,4 @@
-package org.example.deal.entity.pojo;
+package org.example.deal.entity.jsonb;
 
 import lombok.*;
 

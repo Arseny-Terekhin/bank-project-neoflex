@@ -8,19 +8,19 @@ import org.example.deal.dto.enums.CreditStatus;
 import org.example.deal.entity.Client;
 import org.example.deal.entity.Credit;
 import org.example.deal.entity.Statement;
-import org.example.deal.entity.pojo.Passport;
+import org.example.deal.entity.jsonb.Passport;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreatorUpdaterData {
 
-    public Client createClientFromDto(LoanStatementRequestDto dto) {
+   public Client createClientFromDto(LoanStatementRequestDto dto) {
         return Client.builder()
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .middleName(dto.getMiddleName())
                 .email(dto.getEmail())
-                .birthDate(dto.getBirthdate())
+                .birthdate(dto.getBirthdate())
                 .passport(new Passport(dto.getPassportSeries(), dto.getPassportNumber(), null, null)) // Остальные поля — null
                 .build();
     }
@@ -43,7 +43,7 @@ public class CreatorUpdaterData {
                 .firstName(client.getFirstName())
                 .lastName(client.getLastName())
                 .middleName(client.getMiddleName())
-                .birthdate(client.getBirthDate())
+                .birthdate(client.getBirthdate())
                 .passportSeries(client.getPassport().getSeries())
                 .passportNumber(client.getPassport().getNumber())
                 .passportIssueDate(client.getPassport().getIssueDate())

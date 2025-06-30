@@ -3,10 +3,9 @@ package org.example.deal.tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jakarta.servlet.ServletContext;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.checkerframework.checker.units.qual.A;
 import org.example.deal.dto.*;
 import org.example.deal.dto.enums.ApplicationStatus;
 import org.example.deal.entity.Client;
@@ -16,9 +15,10 @@ import org.example.deal.exception.ErrorHandlingControllerAdvice;
 import org.example.deal.repository.ClientRepository;
 import org.example.deal.repository.CreditRepository;
 import org.example.deal.repository.StatementRepository;
-import org.example.deal.service.impl.DealCreateService;
+import org.example.deal.service.impl.ImplDealService;
 import org.example.deal.service.utils.CalcClient;
 import org.example.deal.service.utils.CreatorUpdaterData;
+import org.example.deal.service.utils.MapperData;
 import org.example.deal.utils.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -47,22 +48,22 @@ public class ServiceTests {
     private ObjectMapper objectMapper;
 
     @InjectMocks
-    private DealCreateService service;
+    private ImplDealService service;
 
     @Mock
     private StatementRepository statementRepository;
 
     @Mock
-    private  ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @Mock
-    private  CreditRepository creditRepository;
+    private CreditRepository creditRepository;
 
     @Mock
     private CalcClient calcClient;
 
     @Mock
-    private CreatorUpdaterData creatorUpdaterData;
+    private MapperData mapperData;
 
     @Mock
     private HttpServletRequest httpServletRequest;
@@ -81,7 +82,7 @@ public class ServiceTests {
     }
 
     @Test
-    void createStatementTest(){
+    void createStatementTest() {
         LoanStatementRequestDto loanStatementRequestDto = TestUtils.generateLoanStatementRequestDto();
         Client client = new Client();
         List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
@@ -90,7 +91,7 @@ public class ServiceTests {
         loanOfferDtoList.add(TestUtils.generateLoanOfferDto());
         loanOfferDtoList.add(TestUtils.generateLoanOfferDto());
 
-        when(creatorUpdaterData.createClientFromDto(loanStatementRequestDto)).thenReturn(client);
+        when(mapperData.toClient(loanStatementRequestDto)).thenReturn(client);
         when(clientRepository.save(any())).thenReturn(client);
         when(statementRepository.save(any(Statement.class))).thenAnswer(invocation -> {
             Statement s = invocation.getArgument(0);
@@ -109,7 +110,7 @@ public class ServiceTests {
     }
 
     @Test
-    void selectOfferTest(){
+    void selectOfferTest() {
         LoanOfferDto loanOfferDto = TestUtils.generateLoanOfferDto();
         loanOfferDto.setStatementId(1l);
 
@@ -127,7 +128,7 @@ public class ServiceTests {
     }
 
     @Test
-    void calculateCreditTest(){
+    void calculateCreditTest() {
         Long statementId = 1L;
         FinishRegistrationRequestDto finishDto = TestUtils.generateFinishRegistrationRequestDto();
 
@@ -147,11 +148,11 @@ public class ServiceTests {
         statement.setStatusHistory(new ArrayList<>());
 
         when(statementRepository.findById(statementId)).thenReturn(Optional.of(statement));
-        when(creatorUpdaterData.updateClientFromDto(finishDto, existingClient)).thenReturn(updatedClient);
+        when(mapperData.updateClient(finishDto, existingClient)).thenReturn(updatedClient);
         when(clientRepository.save(updatedClient)).thenReturn(updatedClient);
-        when(creatorUpdaterData.createScoringDataDto(statement, updatedClient)).thenReturn(scoringData);
+        when(mapperData.toScoringDataDto(statement, updatedClient)).thenReturn(scoringData);
         when(calcClient.getCreditFromTheRequest(scoringData)).thenReturn(creditDto);
-        when(creatorUpdaterData.createCreditFromDto(creditDto)).thenReturn(credit);
+        when(mapperData.toCredit(creditDto)).thenReturn(credit);
         when(creditRepository.save(credit)).thenReturn(credit);
 
         service.calculate(finishDto, statementId);
@@ -161,4 +162,32 @@ public class ServiceTests {
         verify(creditRepository).save(credit);
     }
 
+    @Test
+    void selectOfferTest_shouldThrowEntityNotFoundException_whenStatementNotFound() {
+        Long nonExistentId = 999L;
+        LoanOfferDto loanOfferDto = new LoanOfferDto();
+        loanOfferDto.setStatementId(nonExistentId);
+
+        when(statementRepository.findById(nonExistentId))
+                .thenReturn(Optional.empty());
+
+        EntityNotFoundException thrown = assertThrows(
+                EntityNotFoundException.class,
+                () -> service.selectOffer(loanOfferDto)
+        );
+    }
+
+    @Test
+    void calculateCreditTest_shouldThrowEntityNotFoundException_whenStatementNotFound() {
+        Long nonExistentId = 999L;
+        FinishRegistrationRequestDto finishDto = TestUtils.generateFinishRegistrationRequestDto();
+
+        when(statementRepository.findById(nonExistentId))
+                .thenReturn(Optional.empty());
+
+        EntityNotFoundException thrown = assertThrows(
+                EntityNotFoundException.class,
+                () -> service.calculate(finishDto, nonExistentId)
+        );
+    }
 }

@@ -6,7 +6,7 @@ import lombok.*;
 import org.example.deal.dto.EmploymentDto;
 import org.example.deal.dto.enums.Gender;
 import org.example.deal.dto.enums.MaritalStatus;
-import org.example.deal.entity.pojo.Passport;
+import org.example.deal.entity.jsonb.Passport;
 import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
@@ -18,6 +18,7 @@ import java.time.LocalDate;
 @Builder
 @Entity
 @Table(name = "client")
+@ToString
 public class Client {
 
     @Id
@@ -35,7 +36,7 @@ public class Client {
     private String middleName;
 
     @Column(name = "birth_date")
-    private LocalDate birthDate;
+    private LocalDate birthdate;
 
     private String email;
 
