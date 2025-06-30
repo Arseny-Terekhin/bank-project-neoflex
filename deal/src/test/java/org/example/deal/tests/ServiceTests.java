@@ -17,7 +17,6 @@ import org.example.deal.repository.CreditRepository;
 import org.example.deal.repository.StatementRepository;
 import org.example.deal.service.impl.ImplDealService;
 import org.example.deal.service.utils.CalcClient;
-import org.example.deal.service.utils.CreatorUpdaterData;
 import org.example.deal.service.utils.MapperData;
 import org.example.deal.utils.TestUtils;
 import org.junit.jupiter.api.Assertions;
@@ -31,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 

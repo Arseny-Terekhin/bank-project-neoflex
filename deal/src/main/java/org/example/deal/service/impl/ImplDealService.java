@@ -15,7 +15,6 @@ import org.example.deal.repository.CreditRepository;
 import org.example.deal.repository.StatementRepository;
 import org.example.deal.service.DealService;
 import org.example.deal.service.utils.CalcClient;
-import org.example.deal.service.utils.CreatorUpdaterData;
 import org.example.deal.service.utils.MapperData;
 import org.springframework.stereotype.Service;
 
