@@ -3,5 +3,6 @@ package org.example.calculator.dto.enums;
 public enum MaritalStatus {
     SINGLE,
     MARRIED,
-    WIDOWED,
+    WIDOW_WIDOWER,
+    DIVORCED,
 }

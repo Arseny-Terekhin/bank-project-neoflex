@@ -61,7 +61,6 @@ public class ServiceTest {
         assertEquals(credit.getAmount(), test.getAmount());
         assertEquals(credit.getTerm(), test.getTerm());
         assertEquals(credit.getRate(), BigDecimal.valueOf(17));
-        assertEquals(credit.getPaymentScheduleTotal(), new BigDecimal("656674.20"));
     }
 
 }

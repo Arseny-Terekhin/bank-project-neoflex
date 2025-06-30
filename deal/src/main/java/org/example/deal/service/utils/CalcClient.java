@@ -1,0 +1,35 @@
+package org.example.deal.service.utils;
+
+import lombok.RequiredArgsConstructor;
+import org.example.deal.dto.CreditDto;
+import org.example.deal.dto.LoanOfferDto;
+import org.example.deal.dto.LoanStatementRequestDto;
+import org.example.deal.dto.ScoringDataDto;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+
+import java.util.List;
+
+@Component
+@RequiredArgsConstructor
+public class CalcClient {
+
+    private final RestClient client;
+
+    public List<LoanOfferDto> getOfferFromTheRequest(LoanStatementRequestDto loanStatementRequestDto) {
+        return client.post()
+                .uri("/calculator/offers")
+                .body(loanStatementRequestDto)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<LoanOfferDto>>() {});
+    }
+
+    public CreditDto getCreditFromTheRequest(ScoringDataDto scoringDataDto) {
+        return client.post()
+                .uri("/calculator/calc")
+                .body(scoringDataDto)
+                .retrieve()
+                .body(CreditDto.class);
+    }
+}

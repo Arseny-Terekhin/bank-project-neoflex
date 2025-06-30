@@ -57,7 +57,7 @@ public class CalculatorCreditService implements CalculatorService {
         BigDecimal monthlyPayment = calc.calculateMonthlyPayment(totalAmount, rate, request.getTerm());
 
         LoanOfferDto offer = LoanOfferDto.builder()
-                .applicationId(UUID.randomUUID())
+                .statementId(0)
                 .requestedAmount(request.getAmount())
                 .totalAmount(totalAmount)
                 .term(request.getTerm())
@@ -84,10 +84,7 @@ public class CalculatorCreditService implements CalculatorService {
 
         List<PaymentScheduleElementDto> schedule = generatePaymentSchedule(totalAmount, rate, scoringDataDto.getTerm());
 
-        BigDecimal psk = monthlyPayment.multiply(BigDecimal.valueOf(scoringDataDto.getTerm())).divide(scoringDataDto.getAmount(), 2, RoundingMode.HALF_UP);
-        BigDecimal totalSchedule = schedule.stream()
-                .map(PaymentScheduleElementDto::getTotalPayment)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal psk = BigDecimal.valueOf(scoringDataDto.getTerm()).multiply(monthlyPayment);
 
         return CreditDto.builder()
                 .amount(scoringDataDto.getAmount())
@@ -97,7 +94,6 @@ public class CalculatorCreditService implements CalculatorService {
                 .isInsuranceEnabled(scoringDataDto.getIsInsuranceEnabled())
                 .isSalaryClient(scoringDataDto.getIsSalaryClient())
                 .psk(psk).paymentSchedule(schedule)
-                .paymentScheduleTotal(totalSchedule)
                 .build();
     }
 
@@ -113,7 +109,14 @@ public class CalculatorCreditService implements CalculatorService {
             BigDecimal principal = monthlyPayment.subtract(interest).setScale(2, RoundingMode.HALF_UP);
             remainingDebt = remainingDebt.subtract(principal).setScale(2, RoundingMode.HALF_UP);
 
-            schedule.add(PaymentScheduleElementDto.builder().number(month).date(LocalDate.now().plusMonths(month)).totalPayment(monthlyPayment).interestPayment(interest).debtPayment(principal).remainingDebt(remainingDebt.max(BigDecimal.ZERO)).build());
+            schedule.add(PaymentScheduleElementDto.builder()
+                            .number(month)
+                    .date(LocalDate.now().plusMonths(month))
+                    .totalPayment(monthlyPayment)
+                    .interestPayment(interest)
+                    .debtPayment(principal)
+                    .remainingDebt(remainingDebt.max(BigDecimal.ZERO))
+                    .build());
         }
         return schedule;
     }

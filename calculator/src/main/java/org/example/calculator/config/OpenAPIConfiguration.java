@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OpenAPIConfiguration {
 
-    private Environment environment;
+    private final Environment environment;
 
     @Bean
     public OpenAPI defineOpenAPI () {

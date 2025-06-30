@@ -1,13 +1,15 @@
 package org.example.calculator.dto;
 
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CreditDto {
     private BigDecimal amount;
@@ -17,6 +19,5 @@ public class CreditDto {
     private Boolean isInsuranceEnabled;
     private Boolean isSalaryClient;
     private BigDecimal psk;
-    private BigDecimal paymentScheduleTotal;
     private List<PaymentScheduleElementDto> paymentSchedule;
 }
