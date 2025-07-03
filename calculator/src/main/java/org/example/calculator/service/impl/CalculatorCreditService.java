@@ -42,7 +42,7 @@ public class CalculatorCreditService implements CalculatorService {
 
         return offers.stream()
                 .sorted(Comparator.comparing(LoanOfferDto::getRate))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()).reversed();
     }
 
 
