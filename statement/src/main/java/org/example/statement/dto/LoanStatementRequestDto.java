@@ -36,6 +36,7 @@ public class LoanStatementRequestDto {
     @Pattern(regexp = "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$", message = "email введен не коректно")
     private String email;
 
+    @Adult
     @NotNull(message = "birthdate должен быть заполнен")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
