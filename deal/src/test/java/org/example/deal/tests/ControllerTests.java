@@ -107,7 +107,8 @@ public class ControllerTests {
         mockMvc.perform(post("/deal/statement")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].fieldName").value("term"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].fieldName").value("term"))
                 .andExpect(jsonPath("$.violations[0].message").value("term должен быть заполнен"));
     }
 
