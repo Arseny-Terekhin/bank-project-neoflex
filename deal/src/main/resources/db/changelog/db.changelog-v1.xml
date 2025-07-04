@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="create table client" author="Arsenii Terekhin">
+        <createTable tableName="client">
+            <column name="client_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="middle_name" type="VARCHAR(255)"/>
+            <column name="birth_date" type="DATE"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(50)"/>
+            <column name="marital_status" type="VARCHAR(50)"/>
+            <column name="dependent_amount" type="INTEGER"/>
+            <column name="passport" type="jsonb"/>
+            <column name="employment" type="jsonb"/>
+            <column name="account_number" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table credit" author="Arsenii Terekhin">
+        <createTable tableName="credit">
+            <column name="credit_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount" type="NUMERIC(19,2)"/>
+            <column name="term" type="INTEGER"/>
+            <column name="monthly_payment" type="NUMERIC(38,2)"/>
+            <column name="rate" type="NUMERIC(38,2)"/>
+            <column name="psk" type="NUMERIC(38,2)"/>
+            <column name="payment_schedule" type="jsonb"/>
+            <column name="insurance_enabled" type="BOOLEAN"/>
+            <column name="salary_client" type="BOOLEAN"/>
+            <column name="credit_status" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table statement" author="Arsenii Terekhin">
+        <createTable tableName="statement">
+            <column name="statement_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="creation_date" type="TIMESTAMP(6)"/>
+            <column name="sign_data" type="TIMESTAMP(6)"/>
+            <column name="applied_offer" type="jsonb"/>
+            <column name="ses_code" type="VARCHAR(255)"/>
+            <column name="status_history" type="jsonb"/>
+            <column name="credit_id" type="BIGINT"/>
+            <column name="client_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="statement"
+                baseColumnNames="credit_id"
+                referencedTableName="credit"
+                referencedColumnNames="credit_id"
+                constraintName="fk_statement_credit"/>
+
+        <addForeignKeyConstraint
+                baseTableName="statement"
+                baseColumnNames="client_id"
+                referencedTableName="client"
+                referencedColumnNames="client_id"
+                constraintName="fk_statement_client"/>
+    </changeSet>
+
+</databaseChangeLog>

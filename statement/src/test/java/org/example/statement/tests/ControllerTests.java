@@ -1,15 +1,14 @@
-package org.example.deal.tests;
+package org.example.statement.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.example.deal.controller.DealController;
-import org.example.deal.dto.FinishRegistrationRequestDto;
-import org.example.deal.dto.LoanOfferDto;
-import org.example.deal.dto.LoanStatementRequestDto;
-import org.example.deal.exception.ErrorHandlingControllerAdvice;
-import org.example.deal.service.DealService;
-import org.example.deal.utils.TestUtils;
+import org.example.statement.controller.StatementController;
+import org.example.statement.dto.LoanOfferDto;
+import org.example.statement.dto.LoanStatementRequestDto;
+import org.example.statement.exception.ErrorHandlingControllerAdvice;
+import org.example.statement.service.StatementService;
+import org.example.statement.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,12 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,10 +38,10 @@ public class ControllerTests {
     private ObjectMapper objectMapper;
 
     @Mock
-    private DealService service;
+    private StatementService service;
 
     @InjectMocks
-    private DealController controller;
+    private StatementController controller;
 
     @BeforeEach
     void setup() {
@@ -55,7 +54,7 @@ public class ControllerTests {
     }
 
     @Test
-    void statementTest_OkRequest() throws Exception {
+    void createStatementTest_OkRequest() throws Exception {
         LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -64,7 +63,7 @@ public class ControllerTests {
 
         Mockito.when(service.createStatement(any())).thenReturn(loanOfferDtoList);
 
-        mockMvc.perform(post("/deal/statement")
+        mockMvc.perform(post("/statement")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
@@ -72,39 +71,93 @@ public class ControllerTests {
     }
 
     @Test
-    void selectTest_OkRequest() throws Exception {
+    void selectStatementTest_OkRequest() throws Exception {
         LoanOfferDto request = TestUtils.generateLoanOfferDto();
 
         String requestBody = objectMapper.writeValueAsString(request);
 
-        mockMvc.perform(post("/deal/offer/select")
+        mockMvc.perform(post("/statement/offer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void calculateCreditTest_OkRequest() throws Exception {
-        Long statementId = 1L;
-
-        FinishRegistrationRequestDto request = TestUtils.generateFinishRegistrationRequestDto();
-        String requestBody = objectMapper.writeValueAsString(request);
-
-        mockMvc.perform(post("/deal/calculate/{statementId}", statementId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void statementTest_1_BadRequest_Valid_NOtNULL() throws Exception {
+    void createStatementTest_1_BadRequest_Adult() throws Exception {
         LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
+        request.setBirthdate(LocalDate.of(2020, 1, 1));
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
+        loanOfferDtoList.add(LoanOfferDto.builder().rate(BigDecimal.valueOf(17)).build());
+
+        mockMvc.perform(post("/statement")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].fieldName").value("birthdate"))
+                .andExpect(jsonPath("$.violations[0].message").value("Возраст должен быть не менее 18 лет"));
+    }
+
+    @Test
+    void createStatementTest_2_BadRequest_NotNull() throws Exception {
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
+        request.setPassportSeries(null);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
+        loanOfferDtoList.add(LoanOfferDto.builder().rate(BigDecimal.valueOf(17)).build());
+
+        mockMvc.perform(post("/statement")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].fieldName").value("passportSeries"))
+                .andExpect(jsonPath("$.violations[0].message").value("passportSeries должен быть заполнен"));
+    }
+
+    @Test
+    void createStatementTest_3_BadRequest_Min() throws Exception {
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
+        request.setTerm(3);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
+        loanOfferDtoList.add(LoanOfferDto.builder().rate(BigDecimal.valueOf(17)).build());
+
+        mockMvc.perform(post("/statement")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].fieldName").value("term"))
+                .andExpect(jsonPath("$.violations[0].message").value("Срок кредита должен быть не менее 6 месяцев"));
+    }
+
+    @Test
+    void createStatementTest_4_BadRequest_Size() throws Exception {
+        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
+        request.setPassportSeries("123");
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        List<LoanOfferDto> loanOfferDtoList = new ArrayList<>();
+        loanOfferDtoList.add(LoanOfferDto.builder().rate(BigDecimal.valueOf(17)).build());
+
+        mockMvc.perform(post("/statement")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].fieldName").value("passportSeries"))
+                .andExpect(jsonPath("$.violations[0].message").value("Серия паспорта должна состоять из 4 цифр"));
+    }
+
+    @Test
+    void selectStatementTest_1_BadRequest_NotNull() throws Exception {
+        LoanOfferDto request = TestUtils.generateLoanOfferDto();
         request.setTerm(null);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
-        mockMvc.perform(post("/deal/statement")
+        mockMvc.perform(post("/statement/offer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -113,78 +166,21 @@ public class ControllerTests {
     }
 
     @Test
-    void statementTest_2_BadRequest_Valid_DecimalMin() throws Exception {
-        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
-        request.setAmount(BigDecimal.valueOf(10000));
-
-        String requestBody = objectMapper.writeValueAsString(request);
-
-        mockMvc.perform(post("/deal/statement")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].fieldName").value("amount"))
-                .andExpect(jsonPath("$.violations[0].message").value("Сумма кредита должна быть не менее 20 000"));
-    }
-
-    @Test
-    void statementTest_3_BadRequest_Valid_Size() throws Exception {
-        LoanStatementRequestDto request = TestUtils.generateLoanStatementRequestDto();
-        request.setPassportSeries("111");
-
-        String requestBody = objectMapper.writeValueAsString(request);
-
-        mockMvc.perform(post("/deal/statement")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].fieldName").value("passportSeries"))
-                .andExpect(jsonPath("$.violations[0].message").value("Серия паспорта должна состоять из 4 цифр"));
-    }
-
-    @Test
-    void selectTest_1_BadRequest_Valid_Min() throws Exception {
+    void selectStatementTest_2_BadRequest_Min() throws Exception {
         LoanOfferDto request = TestUtils.generateLoanOfferDto();
-        request.setTerm(1);
+        request.setTerm(3);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
-        mockMvc.perform(post("/deal/offer/select")
+        mockMvc.perform(post("/statement/offer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].fieldName").value("term"))
+                .andExpect(jsonPath("$.violations[0].fieldName").value("term"))
                 .andExpect(jsonPath("$.violations[0].message").value("Срок кредита должен быть не менее 6 месяцев"));
     }
 
-    @Test
-    void selectTest_2_BadRequest_Valid_NotNull() throws Exception {
-        LoanOfferDto request = TestUtils.generateLoanOfferDto();
-        request.setTerm(null);
 
-        String requestBody = objectMapper.writeValueAsString(request);
 
-        mockMvc.perform(post("/deal/offer/select")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].fieldName").value("term"))
-                .andExpect(jsonPath("$.violations[0].message").value("term должен быть заполнен"));
-    }
-
-    @Test
-    void calculateCreditTest_1_BadRequest_Valid_NotNull() throws Exception {
-        Long statementId = 1L;
-
-        FinishRegistrationRequestDto request = TestUtils.generateFinishRegistrationRequestDto();
-        request.setAccountNumber(null);
-        String requestBody = objectMapper.writeValueAsString(request);
-
-        mockMvc.perform(post("/deal/calculate/{statementId}", statementId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].fieldName").value("accountNumber"))
-                .andExpect(jsonPath("$.violations[0].message").value("accountNumber должен быть заполнен"));
-    }
 
 }

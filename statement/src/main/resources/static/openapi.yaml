@@ -1,0 +1,161 @@
+openapi: 3.0.1
+info:
+  title: МС Заявка
+  contact:
+    name: Арсений Терехин
+    email: terexin-2003@mail.ru
+  version: "1.0"
+servers:
+- description: Development
+paths:
+  /statement:
+    post:
+      tags:
+      - statement-controller
+      operationId: createStatement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanStatementRequestDto'
+            example:
+              amount: 25000.00
+              term: 12
+              firstName: "Иван"
+              lastName: "Иванов"
+              middleName: "Иванович"
+              email: "ivan.ivanov@example.com"
+              birthdate: "1990-01-01"
+              passportSeries: "1234"
+              passportNumber: "567890"
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LoanOfferDto"
+  /statement/offer:
+    post:
+      tags:
+      - statement-controller
+      operationId: selectOffer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoanOfferDto"
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "200":
+          description: OK
+components:
+  schemas:
+    ValidationErrorResponse:
+      type: object
+      properties:
+        violations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Violation"
+    Violation:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          example: term
+        message:
+          type: string
+          example: Срок кредита должен быть не менее 6 месяцев
+    LoanStatementRequestDto:
+      required:
+      - amount
+      - birthdate
+      - email
+      - firstName
+      - lastName
+      - middleName
+      - passportNumber
+      - passportSeries
+      - term
+      type: object
+      properties:
+        amount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        email:
+          pattern: "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$"
+          type: string
+        birthdate:
+          type: string
+          format: date
+        passportSeries:
+          maxLength: 4
+          minLength: 4
+          type: string
+        passportNumber:
+          maxLength: 6
+          minLength: 6
+          type: string
+    LoanOfferDto:
+      required:
+      - monthlyPayment
+      - rate
+      - requestedAmount
+      - statementId
+      - term
+      - totalAmount
+      type: object
+      properties:
+        statementId:
+          minimum: 1
+          type: integer
+          format: int64
+        requestedAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        totalAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        monthlyPayment:
+          minimum: 1
+          type: number
+        rate:
+          minimum: 1
+          type: number
+        salaryClient:
+          type: boolean
+        insuranceEnabled:
+          type: boolean
