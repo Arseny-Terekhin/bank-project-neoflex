@@ -11,7 +11,7 @@
         http://www.liquibase.org/xml/ns/pro
         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet id="v1-1" author="Arsenii Terekhin">
+    <changeSet id="create table client" author="Arsenii Terekhin">
         <createTable tableName="client">
             <column name="client_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -30,7 +30,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="v1-2" author="Arsenii Terekhin">
+    <changeSet id="create table credit" author="Arsenii Terekhin">
         <createTable tableName="credit">
             <column name="credit_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -47,7 +47,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="v1-3" author="Arsenii Terekhin">
+    <changeSet id="create table statement" author="Arsenii Terekhin">
         <createTable tableName="statement">
             <column name="statement_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>

@@ -1,0 +1,6 @@
+server:
+  port: 8084
+
+springdoc:
+  swagger-ui:
+    url: /openapi.yaml
