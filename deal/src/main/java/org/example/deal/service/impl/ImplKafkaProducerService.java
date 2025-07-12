@@ -2,6 +2,7 @@ package org.example.deal.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.deal.dto.EmailMessage;
 import org.example.deal.dto.StatementStatusHistoryDto;
 import org.example.deal.dto.enums.ApplicationStatus;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ImplKafkaProducerService implements KafkaProducerService {
 
@@ -57,6 +59,9 @@ public class ImplKafkaProducerService implements KafkaProducerService {
                         .time(LocalDateTime.now())
                         .changeType(ChangeType.AUTOMATIC)
                         .build());
+        statementRepository.save(statement);
+
+        log.info("Statement updated to DOCUMENT_CREATED: id={}", statement.getId());
 
         kafkaTemplate.send("create-documents", emailMessage);
     }
@@ -83,8 +88,8 @@ public class ImplKafkaProducerService implements KafkaProducerService {
     public void sendSes(Long statementId, String code) {
         Statement statement = findStatement(statementId);
         String sesCode = statement.getSesCode();
-        System.out.println(sesCode);
-        System.out.println(code);
+
+
         if (sesCode.equals(code)) {
             EmailMessage emailMessage = EmailMessage.builder()
                     .statementId(statementId)
@@ -101,6 +106,8 @@ public class ImplKafkaProducerService implements KafkaProducerService {
                             .changeType(ChangeType.AUTOMATIC)
                             .build());
             statementRepository.save(statement);
+
+            log.info("Statement updated to DOCUMENT_SIGNED: id={}", statement.getId());
 
             kafkaTemplate.send("send-ses", emailMessage);
             creditIssued(statementId);
@@ -137,6 +144,8 @@ public class ImplKafkaProducerService implements KafkaProducerService {
                         .changeType(ChangeType.AUTOMATIC)
                         .build());
         statementRepository.save(statement);
+
+        log.info("Statement updated to CREDIT_ISSUED: id={}", statement.getId());
 
         kafkaTemplate.send("credit-issued", emailMessage);
     }
