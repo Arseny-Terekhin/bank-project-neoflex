@@ -94,7 +94,7 @@ public class ImplKafkaProducerService implements KafkaProducerService {
             EmailMessage emailMessage = EmailMessage.builder()
                     .statementId(statementId)
                     .text("Верный код подтверждения.\nДокументы подписаны")
-                    .theme(Theme.SEND_DOCUMENTS)
+                    .theme(Theme.SEND_SES)
                     .address(statement.getClient().getEmail())
                     .build();
 
@@ -116,7 +116,7 @@ public class ImplKafkaProducerService implements KafkaProducerService {
             EmailMessage emailMessage = EmailMessage.builder()
                     .statementId(statementId)
                     .text("Не верный код подтверждения.\nДокументы не подписаны")
-                    .theme(Theme.SEND_DOCUMENTS)
+                    .theme(Theme.SEND_SES)
                     .address(statement.getClient().getEmail())
                     .build();
             kafkaTemplate.send("send-ses", emailMessage);

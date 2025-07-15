@@ -3,6 +3,7 @@ spring:
     name: dossier
 
   kafka:
+    producer:
     consumer:
       group-id: dossier-group
       auto-offset-reset: earliest
@@ -14,10 +15,10 @@ spring:
         spring.json.use.type.headers: false
         spring.json.trusted.packages: "*"
   mail:
-    username: t
-    password: w
-    host: smtp.gmail.com
-    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    host: ${NAIL_HOST}
+    port: ${MAIL_PORT}
     properties:
       mail:
         smtp:
