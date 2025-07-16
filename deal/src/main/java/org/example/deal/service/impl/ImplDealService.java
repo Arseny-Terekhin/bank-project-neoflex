@@ -14,6 +14,7 @@ import org.example.deal.repository.ClientRepository;
 import org.example.deal.repository.CreditRepository;
 import org.example.deal.repository.StatementRepository;
 import org.example.deal.service.DealService;
+import org.example.deal.service.KafkaProducerService;
 import org.example.deal.service.utils.CalcClient;
 import org.example.deal.service.utils.MapperData;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class ImplDealService implements DealService {
     private final CalcClient calcClient;
     private final HttpServletRequest httpServletRequest;
     private final MapperData mapperData;
+    private final KafkaProducerService kafkaProducerService;
 
 
     @Override
@@ -44,7 +46,6 @@ public class ImplDealService implements DealService {
                 .client(client)
                 .creationDate(LocalDateTime.now())
                 .status(ApplicationStatus.PREAPPROVAL)
-                .sesCode(httpServletRequest.getSession().getId())
                 .statusHistory(List.of(new StatementStatusHistoryDto(ApplicationStatus.PREAPPROVAL, LocalDateTime.now(), ChangeType.AUTOMATIC))).build();
         statementRepository.save(statement);
         log.info("Statement saved: id={}, clientId={}", statement.getId(), client.getId());
@@ -77,6 +78,8 @@ public class ImplDealService implements DealService {
         log.info("Statement updated to APPROVED: id={}, offerAmount={}", statement.getId(), loanOfferDto.getRequestedAmount());
 
         statementRepository.save(statement);
+
+        kafkaProducerService.finishRegistration(statement.getId());
     }
 
     @Override

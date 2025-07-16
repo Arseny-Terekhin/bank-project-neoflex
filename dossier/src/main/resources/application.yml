@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: dossier
+
+  kafka:
+    producer:
+    consumer:
+      group-id: dossier-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.value.default.type: org.example.dossier.dto.EmailMessage
+        spring.json.use.type.headers: false
+        spring.json.trusted.packages: "*"
+  mail:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    host: ${NAIL_HOST}
+    port: ${MAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+server:
+  port: 8086
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: INFO
