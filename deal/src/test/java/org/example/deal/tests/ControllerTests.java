@@ -93,7 +93,6 @@ public class ControllerTests {
         mockMvc.perform(post("/deal/calculate/{statementId}", statementId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
