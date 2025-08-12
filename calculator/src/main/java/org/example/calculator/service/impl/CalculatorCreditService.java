@@ -1,9 +1,9 @@
 package org.example.calculator.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.calculator.dto.*;
 import org.example.calculator.service.utils.Calculator;
 import org.example.calculator.service.CalculatorService;
+import org.example.moduledto.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,6 @@
 package org.example.deal.service;
 
-import org.example.deal.dto.FinishRegistrationRequestDto;
-import org.example.deal.dto.LoanOfferDto;
-import org.example.deal.dto.LoanStatementRequestDto;
+import org.example.moduledto.dto.*;
 
 import java.util.List;
 

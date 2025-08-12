@@ -1,8 +1,8 @@
 package org.example.gateway.service.utils;
 
 import lombok.RequiredArgsConstructor;
-import org.example.gateway.dto.LoanOfferDto;
-import org.example.gateway.dto.LoanStatementRequestDto;
+import org.example.moduledto.dto.LoanOfferDto;
+import org.example.moduledto.dto.LoanStatementRequestDto;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

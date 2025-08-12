@@ -1,12 +1,12 @@
 package org.example.gateway.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.gateway.dto.FinishRegistrationRequestDto;
-import org.example.gateway.dto.LoanOfferDto;
-import org.example.gateway.dto.LoanStatementRequestDto;
 import org.example.gateway.service.GatewayService;
 import org.example.gateway.service.utils.DealClient;
 import org.example.gateway.service.utils.StatementClient;
+import org.example.moduledto.dto.FinishRegistrationRequestDto;
+import org.example.moduledto.dto.LoanOfferDto;
+import org.example.moduledto.dto.LoanStatementRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

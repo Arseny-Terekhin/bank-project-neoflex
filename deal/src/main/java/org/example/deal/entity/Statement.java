@@ -3,9 +3,8 @@ package org.example.deal.entity;
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.deal.dto.LoanOfferDto;
-import org.example.deal.dto.StatementStatusHistoryDto;
-import org.example.deal.dto.enums.ApplicationStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;

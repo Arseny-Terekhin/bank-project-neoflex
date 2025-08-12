@@ -1,6 +1,6 @@
 package org.example.dossier.service;
 
-import org.example.dossier.dto.EmailMessage;
+import org.example.moduledto.dto.EmailMessage;
 
 public interface KafkaConsumerService {
 

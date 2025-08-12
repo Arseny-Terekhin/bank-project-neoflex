@@ -4,15 +4,14 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.gateway.dto.FinishRegistrationRequestDto;
-import org.example.gateway.dto.LoanOfferDto;
-import org.example.gateway.dto.LoanStatementRequestDto;
 import org.example.gateway.service.GatewayService;
+import org.example.moduledto.dto.FinishRegistrationRequestDto;
+import org.example.moduledto.dto.LoanOfferDto;
+import org.example.moduledto.dto.LoanStatementRequestDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

@@ -1,5 +1,6 @@
 package org.example.deal.service;
 
+
 public interface KafkaProducerService {
 
     void finishRegistration(Long statementId);

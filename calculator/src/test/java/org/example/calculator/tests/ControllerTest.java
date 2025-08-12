@@ -5,11 +5,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.example.calculator.utils.TestUtils;
 import org.example.calculator.controller.CalcController;
-import org.example.calculator.dto.CreditDto;
-import org.example.calculator.dto.LoanOfferDto;
-import org.example.calculator.dto.LoanStatementRequestDto;
-import org.example.calculator.dto.ScoringDataDto;
-import org.example.calculator.exception.ErrorHandlingControllerAdvice;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.exception.ErrorHandlingControllerAdvice;
 import org.example.calculator.service.CalculatorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +25,6 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

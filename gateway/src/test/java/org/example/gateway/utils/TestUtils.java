@@ -1,13 +1,7 @@
 package org.example.gateway.utils;
 
-import org.example.gateway.dto.EmploymentDto;
-import org.example.gateway.dto.FinishRegistrationRequestDto;
-import org.example.gateway.dto.LoanOfferDto;
-import org.example.gateway.dto.LoanStatementRequestDto;
-import org.example.gateway.dto.enums.EmploymentPosition;
-import org.example.gateway.dto.enums.EmploymentStatus;
-import org.example.gateway.dto.enums.Gender;
-import org.example.gateway.dto.enums.MaritalStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,10 +1,7 @@
 package org.example.deal.utils;
 
-import org.example.deal.dto.*;
-import org.example.deal.dto.enums.EmploymentPosition;
-import org.example.deal.dto.enums.EmploymentStatus;
-import org.example.deal.dto.enums.Gender;
-import org.example.deal.dto.enums.MaritalStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

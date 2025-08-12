@@ -1,7 +1,8 @@
 package org.example.statement.service;
 
-import org.example.statement.dto.LoanOfferDto;
-import org.example.statement.dto.LoanStatementRequestDto;
+
+import org.example.moduledto.dto.LoanOfferDto;
+import org.example.moduledto.dto.LoanStatementRequestDto;
 
 import java.util.List;
 
