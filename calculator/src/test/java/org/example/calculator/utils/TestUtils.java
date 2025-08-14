@@ -1,12 +1,7 @@
 package org.example.calculator.utils;
 
-import org.example.calculator.dto.EmploymentDto;
-import org.example.calculator.dto.LoanStatementRequestDto;
-import org.example.calculator.dto.ScoringDataDto;
-import org.example.calculator.dto.enums.EmploymentPosition;
-import org.example.calculator.dto.enums.EmploymentStatus;
-import org.example.calculator.dto.enums.Gender;
-import org.example.calculator.dto.enums.MaritalStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

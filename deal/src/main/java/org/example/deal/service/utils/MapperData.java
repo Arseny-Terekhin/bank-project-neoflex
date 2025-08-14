@@ -1,10 +1,7 @@
 package org.example.deal.service.utils;
 
-import org.example.deal.dto.CreditDto;
-import org.example.deal.dto.FinishRegistrationRequestDto;
-import org.example.deal.dto.LoanStatementRequestDto;
-import org.example.deal.dto.ScoringDataDto;
-import org.example.deal.dto.enums.CreditStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 import org.example.deal.entity.Client;
 import org.example.deal.entity.Credit;
 import org.example.deal.entity.Statement;

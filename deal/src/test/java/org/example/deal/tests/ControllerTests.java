@@ -1,13 +1,11 @@
 package org.example.deal.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.moduledto.dto.*;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.example.deal.controller.DealController;
-import org.example.deal.dto.FinishRegistrationRequestDto;
-import org.example.deal.dto.LoanOfferDto;
-import org.example.deal.dto.LoanStatementRequestDto;
-import org.example.deal.exception.ErrorHandlingControllerAdvice;
+import org.example.moduledto.exception.ErrorHandlingControllerAdvice;
 import org.example.deal.service.DealService;
 import org.example.deal.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,7 +91,6 @@ public class ControllerTests {
         mockMvc.perform(post("/deal/calculate/{statementId}", statementId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 

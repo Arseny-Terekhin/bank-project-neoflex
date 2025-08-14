@@ -3,9 +3,8 @@ package org.example.deal.entity;
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.deal.dto.EmploymentDto;
-import org.example.deal.dto.enums.Gender;
-import org.example.deal.dto.enums.MaritalStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 import org.example.deal.entity.jsonb.Passport;
 import org.hibernate.annotations.Type;
 

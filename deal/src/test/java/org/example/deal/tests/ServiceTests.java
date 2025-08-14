@@ -6,8 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.example.deal.dto.*;
-import org.example.deal.dto.enums.ApplicationStatus;
+import org.example.deal.service.KafkaProducerService;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.*;
 import org.example.deal.entity.Client;
 import org.example.deal.entity.Credit;
 import org.example.deal.entity.Statement;
@@ -67,6 +68,9 @@ public class ServiceTests {
     private HttpServletRequest httpServletRequest;
 
     @Mock
+    private KafkaProducerService kafkaProducerService;
+
+    @Mock
     private HttpSession httpSession;
 
     @BeforeEach
@@ -97,8 +101,7 @@ public class ServiceTests {
             return s;
         });
         when(calcClient.getOfferFromTheRequest(any())).thenReturn(loanOfferDtoList);
-        when(httpServletRequest.getSession()).thenReturn(httpSession);
-        when(httpSession.getId()).thenReturn("1");
+        
 
 
         List<LoanOfferDto> offers = service.createStatement(loanStatementRequestDto);

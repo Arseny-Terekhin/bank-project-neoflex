@@ -1,0 +1,290 @@
+openapi: 3.0.1
+info:
+  title: Кредитный калькулятор
+  description: Это API предоставляет эндпоинты для расчета кредита
+  contact:
+    name: Арсений Терехин
+    email: terexin-2003@mail.ru
+  version: "1.0"
+servers:
+- description: Development
+paths:
+  /calculator/offers:
+    post:
+      tags:
+      - calc-controller
+      operationId: offersCalc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoanStatementRequestDto"
+            example:
+              amount: 25000.00
+              term: 12
+              firstName: "Иван"
+              lastName: "Иванов"
+              middleName: "Иванович"
+              email: "ivan.ivanov@example.com"
+              birthdate: "1990-01-01"
+              passportSeries: "1234"
+              passportNumber: "567890"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LoanOfferDto"
+  /calculator/calc:
+    post:
+      tags:
+      - calc-controller
+      operationId: calc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScoringDataDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CreditDto"
+components:
+  schemas:
+    LoanStatementRequestDto:
+      required:
+      - amount
+      - birthdate
+      - email
+      - firstName
+      - lastName
+      - middleName
+      - passportNumber
+      - passportSeries
+      - term
+      type: object
+      properties:
+        amount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        email:
+          pattern: "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$"
+          type: string
+        birthdate:
+          type: string
+          format: date
+        passportSeries:
+          maxLength: 4
+          minLength: 4
+          type: string
+        passportNumber:
+          maxLength: 6
+          minLength: 6
+          type: string
+    LoanOfferDto:
+      required:
+      - monthlyPayment
+      - rate
+      - requestedAmount
+      - statementId
+      - term
+      - totalAmount
+      type: object
+      properties:
+        statementId:
+          minimum: 1
+          type: integer
+          format: int64
+        requestedAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        totalAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        monthlyPayment:
+          minimum: 1
+          type: number
+        rate:
+          minimum: 1
+          type: number
+        insuranceEnabled:
+          type: boolean
+        salaryClient:
+          type: boolean
+    EmploymentDto:
+      required:
+      - employerINN
+      - employmentStatus
+      - position
+      - salary
+      - workExperienceCurrent
+      - workExperienceTotal
+      type: object
+      properties:
+        employmentStatus:
+          type: string
+          enum:
+          - EMPLOYED
+          - UNEMPLOYED
+          - SELF_EMPLOYED
+          - BUSINESS_OWNER
+        employerINN:
+          type: string
+        position:
+          type: string
+          enum:
+          - WORKER
+          - MID_MANAGER
+          - TOP_MANAGER
+          - OWNER
+        workExperienceTotal:
+          minimum: 1
+          type: integer
+          format: int32
+        workExperienceCurrent:
+          minimum: 1
+          type: integer
+          format: int32
+        salary:
+          minimum: 1.0
+          exclusiveMinimum: false
+          type: number
+    ScoringDataDto:
+      required:
+      - account
+      - amount
+      - birthdate
+      - dependentAmount
+      - employment
+      - firstName
+      - gender
+      - isInsuranceEnabled
+      - isSalaryClient
+      - lastName
+      - maritalStatus
+      - middleName
+      - passportIssueBranch
+      - passportIssueDate
+      - passportNumber
+      - passportSeries
+      - term
+      type: object
+      properties:
+        amount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        passportSeries:
+          maxLength: 4
+          minLength: 4
+          type: string
+        passportNumber:
+          maxLength: 6
+          minLength: 6
+          type: string
+        passportIssueDate:
+          type: string
+          format: date
+        passportIssueBranch:
+          type: string
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - NON_BINARY
+        maritalStatus:
+          type: string
+          enum:
+          - SINGLE
+          - MARRIED
+          - WIDOW_WIDOWER
+          - DIVORCED
+        dependentAmount:
+          type: integer
+          format: int32
+        employment:
+          $ref: "#/components/schemas/EmploymentDto"
+        account:
+          type: string
+        isInsuranceEnabled:
+          type: boolean
+        isSalaryClient:
+          type: boolean
+    CreditDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        term:
+          type: integer
+          format: int32
+        monthlyPayment:
+          type: number
+        rate:
+          type: number
+        isInsuranceEnabled:
+          type: boolean
+        isSalaryClient:
+          type: boolean
+        psk:
+          type: number
+        paymentSchedule:
+          type: array
+          items:
+            $ref: "#/components/schemas/PaymentScheduleElementDto"
+    PaymentScheduleElementDto:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int32
+        date:
+          type: string
+          format: date
+        totalPayment:
+          type: number
+        interestPayment:
+          type: number
+        debtPayment:
+          type: number
+        remainingDebt:
+          type: number

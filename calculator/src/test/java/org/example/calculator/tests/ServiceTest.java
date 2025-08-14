@@ -1,9 +1,6 @@
 package org.example.calculator.tests;
 
-import org.example.calculator.dto.CreditDto;
-import org.example.calculator.dto.LoanOfferDto;
-import org.example.calculator.dto.LoanStatementRequestDto;
-import org.example.calculator.dto.ScoringDataDto;
+import org.example.moduledto.dto.*;
 import org.example.calculator.utils.TestUtils;
 import org.example.calculator.service.impl.CalculatorCreditService;
 import org.junit.jupiter.api.Test;
@@ -43,10 +40,10 @@ public class ServiceTest {
         List<LoanOfferDto> test = calculatorCreditService.getLoanOffers(dto);
 
         assertNotNull(test);
-        assertEquals(test.get(0).getRate(), BigDecimal.valueOf(17));
-        assertEquals(test.get(1).getRate(), BigDecimal.valueOf(18));
-        assertEquals(test.get(2).getRate(), BigDecimal.valueOf(20));
-        assertEquals(test.get(3).getRate(), BigDecimal.valueOf(21));
+        assertEquals(test.get(0).getRate(), BigDecimal.valueOf(21));
+        assertEquals(test.get(1).getRate(), BigDecimal.valueOf(20));
+        assertEquals(test.get(2).getRate(), BigDecimal.valueOf(18));
+        assertEquals(test.get(3).getRate(), BigDecimal.valueOf(17));
 
     }
 

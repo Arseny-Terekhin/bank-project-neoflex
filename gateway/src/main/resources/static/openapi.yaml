@@ -1,0 +1,260 @@
+openapi: 3.0.1
+info:
+  title: Gateway API
+  version: v0
+servers:
+- url: http://localhost:8086
+  description: Generated server url
+paths:
+  /api/statement:
+    post:
+      tags:
+      - gateway-controller
+      operationId: createStatement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoanStatementRequestDto"
+            example:
+              amount: 25000.00
+              term: 12
+              firstName: "Иван"
+              lastName: "Иванов"
+              middleName: "Иванович"
+              email: "ivan.ivanov@example.com"
+              birthdate: "1990-01-01"
+              passportSeries: "1234"
+              passportNumber: "567890"
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LoanOfferDto"
+  /api/offer/select:
+    post:
+      tags:
+      - gateway-controller
+      operationId: selectOffer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoanOfferDto"
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "200":
+          description: OK
+  /api/calculate/{statementId}:
+    post:
+      tags:
+      - gateway-controller
+      operationId: calculateCredit
+      parameters:
+      - name: statementId
+        in: path
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FinishRegistrationRequestDto"
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "200":
+          description: OK
+components:
+  schemas:
+    ValidationErrorResponse:
+      type: object
+      properties:
+        violations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Violation"
+    Violation:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        message:
+          type: string
+    LoanStatementRequestDto:
+      required:
+      - amount
+      - birthdate
+      - email
+      - firstName
+      - lastName
+      - middleName
+      - passportNumber
+      - passportSeries
+      - term
+      type: object
+      properties:
+        amount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        email:
+          pattern: "^[a-z0-9A-Z_!#$%&'*+/=?`{|}~^.-]+@[a-z0-9A-Z.-]+$"
+          type: string
+        birthdate:
+          type: string
+          format: date
+        passportSeries:
+          maxLength: 4
+          minLength: 4
+          type: string
+        passportNumber:
+          maxLength: 6
+          minLength: 6
+          type: string
+    LoanOfferDto:
+      required:
+      - monthlyPayment
+      - rate
+      - requestedAmount
+      - statementId
+      - term
+      - totalAmount
+      type: object
+      properties:
+        statementId:
+          minimum: 1
+          type: integer
+          format: int64
+        requestedAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        totalAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        monthlyPayment:
+          minimum: 1
+          type: number
+        rate:
+          minimum: 1
+          type: number
+        salaryClient:
+          type: boolean
+        insuranceEnabled:
+          type: boolean
+    EmploymentDto:
+      required:
+      - employerINN
+      - employmentStatus
+      - position
+      - salary
+      - workExperienceCurrent
+      - workExperienceTotal
+      type: object
+      properties:
+        employmentStatus:
+          type: string
+          enum:
+          - EMPLOYED
+          - UNEMPLOYED
+          - SELF_EMPLOYED
+          - BUSINESS_OWNER
+        employerINN:
+          type: string
+        position:
+          type: string
+          enum:
+          - WORKER
+          - MID_MANAGER
+          - TOP_MANAGER
+          - OWNER
+        workExperienceTotal:
+          minimum: 1
+          type: integer
+          format: int32
+        workExperienceCurrent:
+          minimum: 1
+          type: integer
+          format: int32
+        salary:
+          minimum: 1.0
+          exclusiveMinimum: false
+          type: number
+    FinishRegistrationRequestDto:
+      required:
+      - accountNumber
+      - dependentAmount
+      - employment
+      - gender
+      - maritalStatus
+      - passportIssueBrach
+      - passportIssueDate
+      type: object
+      properties:
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - NON_BINARY
+        maritalStatus:
+          type: string
+          enum:
+          - SINGLE
+          - MARRIED
+          - WIDOW_WIDOWER
+          - DIVORCED
+        dependentAmount:
+          minimum: 20000
+          exclusiveMinimum: false
+          type: number
+        passportIssueDate:
+          type: string
+          format: date
+        passportIssueBrach:
+          type: string
+        employment:
+          $ref: "#/components/schemas/EmploymentDto"
+        accountNumber:
+          type: string

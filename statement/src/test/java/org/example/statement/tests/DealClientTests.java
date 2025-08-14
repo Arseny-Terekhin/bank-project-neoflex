@@ -1,7 +1,7 @@
 package org.example.statement.tests;
 
-import org.example.statement.dto.LoanOfferDto;
-import org.example.statement.dto.LoanStatementRequestDto;
+import org.example.moduledto.dto.LoanOfferDto;
+import org.example.moduledto.dto.LoanStatementRequestDto;
 import org.example.statement.service.utils.DealClient;
 import org.example.statement.utils.TestUtils;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class DealClientTests {

@@ -3,8 +3,8 @@ package org.example.deal.entity;
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.deal.dto.PaymentScheduleElementDto;
-import org.example.deal.dto.enums.CreditStatus;
+import org.example.moduledto.dto.*;
+import org.example.moduledto.dto.enums.CreditStatus;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;

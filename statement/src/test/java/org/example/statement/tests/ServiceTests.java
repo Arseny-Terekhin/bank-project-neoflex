@@ -3,9 +3,9 @@ package org.example.statement.tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.example.statement.dto.LoanOfferDto;
-import org.example.statement.dto.LoanStatementRequestDto;
-import org.example.statement.exception.ErrorHandlingControllerAdvice;
+import org.example.moduledto.dto.LoanOfferDto;
+import org.example.moduledto.dto.LoanStatementRequestDto;
+import org.example.moduledto.exception.ErrorHandlingControllerAdvice;
 import org.example.statement.service.impl.ImplStatementService;
 import org.example.statement.service.utils.DealClient;
 import org.example.statement.utils.TestUtils;
@@ -21,12 +21,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceTests {
