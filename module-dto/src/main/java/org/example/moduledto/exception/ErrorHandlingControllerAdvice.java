@@ -1,9 +1,9 @@
-package org.example.statement.exception;
+package org.example.moduledto.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.example.statement.exception.validation.ValidationErrorResponse;
-import org.example.statement.exception.validation.Violation;
+import org.example.moduledto.exception.validation.ValidationErrorResponse;
+import org.example.moduledto.exception.validation.Violation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,5 +46,6 @@ public class ErrorHandlingControllerAdvice {
                 .collect(Collectors.toList());
         return new ValidationErrorResponse(violations);
     }
+
 
 }

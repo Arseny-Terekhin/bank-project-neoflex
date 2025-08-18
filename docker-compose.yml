@@ -1,0 +1,112 @@
+version: '3.8'
+
+volumes:
+  maven-repo:
+  postgres-data:
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pgpwd4habr
+      POSTGRES_DB: postgres
+    ports:
+      - "5438:5438"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.2.1
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.2.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  maven-builder:
+    image: maven:3.9.6-eclipse-temurin-21
+    container_name: maven-builder
+    volumes:
+      - ./module-dto:/opt/module-dto
+      - maven-repo:/root/.m2
+    working_dir: /opt/module-dto
+    command: mvn clean install -DskipTests -Dmaven.repo.local=/root/.m2/repository
+
+
+  calculator:
+    build: ./calculator
+    container_name: calculator
+    ports:
+      - "8080:8080"
+    depends_on:
+      - maven-builder
+    volumes:
+      - maven-repo:/root/.m2
+
+  deal:
+    build: ./deal
+    container_name: deal
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5438/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: pgpwd4habr
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - maven-builder
+      - postgres
+      - kafka
+    volumes:
+      - maven-repo:/root/.m2
+
+  dossier:
+    build: ./dossier
+    container_name: dossier
+    ports:
+      - "8085:8085"
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - maven-builder
+      - kafka
+    volumes:
+      - maven-repo:/root/.m2
+
+  statement:
+    build: ./statement
+    container_name: statement
+    ports:
+      - "8084:8084"
+    depends_on:
+      - maven-builder
+      - deal
+    volumes:
+      - maven-repo:/root/.m2
+
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - "8086:8086"
+    depends_on:
+      - maven-builder
+      - deal
+      - statement
+    volumes:
+      - maven-repo:/root/.m2
