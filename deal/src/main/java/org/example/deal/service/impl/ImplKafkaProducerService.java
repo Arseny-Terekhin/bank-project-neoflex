@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.example.deal.dto.*;
 import org.example.deal.dto.enums.*;
 
@@ -67,8 +69,8 @@ public class ImplKafkaProducerService implements KafkaProducerService {
     @Override
     public void sendDocuments(Long statementId) {
         Statement statement = findStatement(statementId);
-        Random random = new Random();
-        String code = random.nextInt(10000)+"";
+        int randomInt = ThreadLocalRandom.current().nextInt(100000, 999999);
+        String code = randomInt +"";
         statement.setSesCode(code);
 
         EmailMessage emailMessage = EmailMessage.builder()
