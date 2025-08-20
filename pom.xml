@@ -58,7 +58,7 @@
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.11.1.2311</version>
+                    <version>3.11.0.2311</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -66,6 +66,5 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.organization>arseny-terekhin</sonar.organization>
     </properties>
 </project>
