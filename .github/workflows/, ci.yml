@@ -29,5 +29,13 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./**/target/site/jacoco/jacoco.xml
 
-      - name: Run SonarCloud analysis
-        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.2311:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=Arseny-Terekhin_bank-project-neoflex -Dsonar.organization=arseny-terekhin -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=Arseny-Terekhin_bank-project-neoflex
+            -Dsonar.organization=arseny-terekhin
