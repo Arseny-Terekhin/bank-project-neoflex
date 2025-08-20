@@ -30,4 +30,13 @@ jobs:
           files: ./**/target/site/jacoco/jacoco.xml
 
       - name: Run SonarCloud analysis
-        run: mvn -B sonar:sonar -Dsonar.projectKey=Arseny-Terekhin_bank-project-neoflex -Dsonar.organization=arseny-terekhin -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B sonar:sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.projectKey=Arseny-Terekhin_bank-project-neoflex \
+          -Dsonar.organization=arseny-terekhin \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.sources=src/main/java \
+          -Dsonar.tests=src/test/java \
+          -Dsonar.java.binaries=target/classes \
+          -Dsonar.junit.reportsPath=target/surefire-reports \
+          -Dsonar.jacoco.reportsPath=target/site/jacoco/jacoco.xml \
