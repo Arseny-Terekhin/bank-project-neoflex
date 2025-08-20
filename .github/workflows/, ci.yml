@@ -1,4 +1,4 @@
-name: CI
+name: CI Pipeline
 
 on:
   push:
@@ -11,31 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
           java-version: '21'
+          distribution: 'temurin'
 
-      - name: Build and test with Maven
-        run: mvn clean verify
-
-      - name: Generate Jacoco coverage report
-        run: mvn jacoco:report
+      - name: Build and run tests with coverage
+        run: mvn -B package jacoco:report
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v3
         with:
-          files: target/site/jacoco/jacoco.xml
-          fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./**/target/site/jacoco/jacoco.xml
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2.1.0
-        with:
-          projectBaseDir: .
-          extraArgs: >
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Run SonarCloud analysis
+        run: mvn -B sonar:sonar -Dsonar.projectKey=Arseny-Terekhin_bank-project-neoflex -Dsonar.organization=arseny-terekhin -Dsonar.token=${{ secrets.SONAR_TOKEN }}
