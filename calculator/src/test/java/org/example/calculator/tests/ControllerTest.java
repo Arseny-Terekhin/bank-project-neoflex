@@ -3,11 +3,14 @@ package org.example.calculator.tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.example.calculator.utils.TestUtils;
 import org.example.calculator.controller.CalcController;
-import org.example.moduledto.dto.*;
-import org.example.moduledto.exception.ErrorHandlingControllerAdvice;
-import org.example.calculator.service.CalculatorService;
+import org.example.calculator.service.CalcService;
+import org.example.calculator.utils.TestUtils;
+import org.example.calculator.dto.CreditDto;
+import org.example.calculator.dto.LoanOfferDto;
+import org.example.calculator.dto.LoanStatementRequestDto;
+import org.example.calculator.dto.ScoringDataDto;
+import org.example.calculator.exception.ErrorHandlingControllerAdvice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +40,7 @@ public class ControllerTest {
     private ObjectMapper objectMapper;
 
     @Mock
-    private CalculatorService creditService;
+    private CalcService creditService;
 
     @InjectMocks
     private CalcController calcController;

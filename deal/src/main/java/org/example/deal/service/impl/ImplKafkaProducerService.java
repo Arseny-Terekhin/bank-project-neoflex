@@ -6,14 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.deal.entity.Statement;
 import org.example.deal.repository.StatementRepository;
 import org.example.deal.service.KafkaProducerService;
-import org.example.moduledto.dto.EmailMessage;
+import org.example.deal.dto.EmailMessage;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Random;
-import org.example.moduledto.dto.*;
-import org.example.moduledto.dto.enums.*;
+import org.example.deal.dto.*;
+import org.example.deal.dto.enums.*;
 
 @Service
 @Slf4j

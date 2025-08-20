@@ -1,8 +1,8 @@
 package org.example.statement.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.moduledto.dto.LoanOfferDto;
-import org.example.moduledto.dto.LoanStatementRequestDto;
+import org.example.statement.dto.LoanOfferDto;
+import org.example.statement.dto.LoanStatementRequestDto;
 import org.example.statement.service.StatementService;
 import org.example.statement.service.utils.DealClient;
 import org.springframework.stereotype.Service;

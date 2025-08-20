@@ -1,9 +1,9 @@
 package org.example.calculator.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.calculator.service.utils.Calculator;
-import org.example.calculator.service.CalculatorService;
-import org.example.moduledto.dto.*;
+import org.example.calculator.service.CalcService;
+import org.example.calculator.service.utils.CreditCalculator;
+import org.example.calculator.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +13,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CalculatorCreditService implements CalculatorService {
+public class CalculatorCreditService implements CalcService {
     
-    private final Calculator calc;
+    private final CreditCalculator calc;
 
     @Value("${loan.base-rate}")
     private BigDecimal baseRate;

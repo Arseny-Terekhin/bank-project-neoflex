@@ -1,11 +1,11 @@
 package org.example.deal.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.moduledto.dto.*;
+import org.example.deal.dto.*;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.example.deal.controller.DealController;
-import org.example.moduledto.exception.ErrorHandlingControllerAdvice;
+import org.example.deal.exception.ErrorHandlingControllerAdvice;
 import org.example.deal.service.DealService;
 import org.example.deal.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;

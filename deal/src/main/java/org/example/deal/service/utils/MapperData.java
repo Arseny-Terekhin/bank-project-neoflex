@@ -1,7 +1,7 @@
 package org.example.deal.service.utils;
 
-import org.example.moduledto.dto.*;
-import org.example.moduledto.dto.enums.*;
+import org.example.deal.dto.*;
+import org.example.deal.dto.enums.*;
 import org.example.deal.entity.Client;
 import org.example.deal.entity.Credit;
 import org.example.deal.entity.Statement;
@@ -9,7 +9,7 @@ import org.example.deal.entity.jsonb.Passport;
 import org.mapstruct.*;
 
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, imports = {Passport.class, CreditStatus.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, imports = {Passport.class, CreditStatus.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MapperData {
 
     @Mapping(target = "passport", expression = "java(new Passport(dto.getPassportSeries(), dto.getPassportNumber(), null, null))")

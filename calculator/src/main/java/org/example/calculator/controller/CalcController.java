@@ -3,11 +3,11 @@ package org.example.calculator.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.calculator.service.CalculatorService;
-import org.example.moduledto.dto.CreditDto;
-import org.example.moduledto.dto.LoanOfferDto;
-import org.example.moduledto.dto.LoanStatementRequestDto;
-import org.example.moduledto.dto.ScoringDataDto;
+import org.example.calculator.service.CalcService;
+import org.example.calculator.dto.CreditDto;
+import org.example.calculator.dto.LoanOfferDto;
+import org.example.calculator.dto.LoanStatementRequestDto;
+import org.example.calculator.dto.ScoringDataDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 public class CalcController {
 
-    private final CalculatorService calculator;
+    private final CalcService calculator;
 
 
     @PostMapping("/offers")

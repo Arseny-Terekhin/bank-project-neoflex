@@ -2,8 +2,8 @@ package org.example.deal.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
-import org.example.moduledto.dto.*;
-import org.example.moduledto.dto.enums.*;
+import org.example.deal.dto.*;
+import org.example.deal.dto.enums.*;
 import org.example.deal.entity.Client;
 import org.example.deal.entity.Statement;
 import org.example.deal.repository.StatementRepository;

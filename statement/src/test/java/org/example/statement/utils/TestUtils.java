@@ -1,7 +1,7 @@
 package org.example.statement.utils;
 
-import org.example.moduledto.dto.LoanOfferDto;
-import org.example.moduledto.dto.LoanStatementRequestDto;
+import org.example.statement.dto.LoanOfferDto;
+import org.example.statement.dto.LoanStatementRequestDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

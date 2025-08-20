@@ -2,7 +2,7 @@ package org.example.dossier.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.dossier.service.MailSenderService;
-import org.example.moduledto.dto.EmailMessage;
+import org.example.dossier.dto.EmailMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

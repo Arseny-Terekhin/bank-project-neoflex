@@ -1,6 +1,6 @@
 package org.example.deal.tests;
 
-import org.example.moduledto.dto.*;
+import org.example.deal.dto.*;
 import org.example.deal.service.utils.CalcClient;
 import org.example.deal.utils.TestUtils;
 import org.junit.jupiter.api.Test;

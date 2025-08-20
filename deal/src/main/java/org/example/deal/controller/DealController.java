@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.moduledto.dto.*;
+import org.example.deal.dto.*;
 import org.example.deal.service.DealService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

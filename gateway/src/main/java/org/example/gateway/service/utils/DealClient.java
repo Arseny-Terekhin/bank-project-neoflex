@@ -1,7 +1,7 @@
 package org.example.gateway.service.utils;
 
 import lombok.RequiredArgsConstructor;
-import org.example.moduledto.dto.FinishRegistrationRequestDto;
+import org.example.gateway.dto.FinishRegistrationRequestDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
