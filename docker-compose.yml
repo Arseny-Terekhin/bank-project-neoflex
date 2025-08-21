@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: pgpwd4habr
       POSTGRES_DB: postgres
     ports:
-      - "5438:5438"
+      - "5438:5432"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
@@ -41,8 +41,10 @@ services:
     build: ./deal
     ports:
       - "8081:8081"
+    env_file:
+      - ./deal/param.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5438/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: pgpwd4habr
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -54,6 +56,8 @@ services:
     build: ./dossier
     ports:
       - "8085:8085"
+    env_file:
+      - ./dossier/param.env
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:

@@ -17,7 +17,7 @@ public class StatementClient {
 
     public List<LoanOfferDto> createStatement(LoanStatementRequestDto loanStatementRequestDto) {
         return client.post()
-                .uri("http://localhost:8084/statement")
+                .uri("http://statement:8084/statement")
                 .body(loanStatementRequestDto)
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<LoanOfferDto>>() {});
@@ -25,7 +25,7 @@ public class StatementClient {
 
     public void selectOffer(LoanOfferDto loanOfferDto) {
         client.post()
-                .uri("http://localhost:8084/statement/offer")
+                .uri("http://statement:8084/statement/offer")
                 .body(loanOfferDto);
     }
 }

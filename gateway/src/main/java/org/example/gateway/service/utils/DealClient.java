@@ -13,7 +13,7 @@ public class DealClient {
 
     public void calculatedCredit(Long statementId, FinishRegistrationRequestDto finishRegistrationRequestDto) {
         client.post()
-                .uri("http://localhost:8081/deal/calculate/" + statementId)
+                .uri("http://deal:8081/deal/calculate/" + statementId)
                 .body(finishRegistrationRequestDto);
     }
 }

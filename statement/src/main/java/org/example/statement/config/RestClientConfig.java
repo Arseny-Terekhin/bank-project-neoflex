@@ -9,6 +9,6 @@ public class RestClientConfig {
 
     @Bean
     public RestClient restClient(RestClient.Builder builder) {
-        return builder.baseUrl("http://localhost:8081").build();
+        return builder.baseUrl("http://deal:8081").build();
     }
 }
