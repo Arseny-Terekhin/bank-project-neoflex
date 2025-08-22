@@ -6,14 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.deal.entity.Statement;
 import org.example.deal.repository.StatementRepository;
 import org.example.deal.service.KafkaProducerService;
-import org.example.moduledto.dto.EmailMessage;
+import org.example.deal.dto.EmailMessage;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Random;
-import org.example.moduledto.dto.*;
-import org.example.moduledto.dto.enums.*;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.example.deal.dto.*;
+import org.example.deal.dto.enums.*;
 
 @Service
 @Slf4j
@@ -67,8 +69,8 @@ public class ImplKafkaProducerService implements KafkaProducerService {
     @Override
     public void sendDocuments(Long statementId) {
         Statement statement = findStatement(statementId);
-        Random random = new Random();
-        String code = random.nextInt(10000)+"";
+        int randomInt = ThreadLocalRandom.current().nextInt(100000, 999999);
+        String code = randomInt +"";
         statement.setSesCode(code);
 
         EmailMessage emailMessage = EmailMessage.builder()

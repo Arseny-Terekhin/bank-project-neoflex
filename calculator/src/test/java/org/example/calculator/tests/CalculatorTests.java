@@ -1,6 +1,6 @@
 package org.example.calculator.tests;
 
-import org.example.calculator.service.utils.Calculator;
+import org.example.calculator.service.utils.CreditCalculator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CalculatorTests {
 
     @Autowired
-    Calculator calculator;
+    CreditCalculator calculator;
 
     @Test
     void calculateMonthlyPaymentTest_1_OkStatus() {

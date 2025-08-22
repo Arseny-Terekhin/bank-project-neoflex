@@ -1,0 +1,79 @@
+version: '3.8'
+
+volumes:
+  postgres-data:
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pgpwd4habr
+      POSTGRES_DB: postgres
+    ports:
+      - "5438:5432"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.2.1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.2.1
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  calculator:
+    build: ./calculator
+    ports:
+      - "8080:8080"
+
+  deal:
+    build: ./deal
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./deal/param.env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: pgpwd4habr
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - postgres
+      - kafka
+
+  dossier:
+    build: ./dossier
+    ports:
+      - "8085:8085"
+    env_file:
+      - ./dossier/param.env
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+
+  statement:
+    build: ./statement
+    ports:
+      - "8084:8084"
+    depends_on:
+      - deal
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "8086:8086"
+    depends_on:
+      - deal
+      - statement

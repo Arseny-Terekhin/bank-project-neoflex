@@ -1,7 +1,7 @@
 package org.example.deal.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
-import org.example.moduledto.dto.*;
+import org.example.deal.dto.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;

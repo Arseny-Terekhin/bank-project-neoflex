@@ -1,7 +1,7 @@
 package org.example.deal.service.utils;
 
 import lombok.RequiredArgsConstructor;
-import org.example.moduledto.dto.*;
+import org.example.deal.dto.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

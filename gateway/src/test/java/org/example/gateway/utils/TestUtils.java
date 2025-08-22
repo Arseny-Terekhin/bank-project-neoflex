@@ -1,7 +1,7 @@
 package org.example.gateway.utils;
 
-import org.example.moduledto.dto.*;
-import org.example.moduledto.dto.enums.*;
+import org.example.gateway.dto.*;
+import org.example.gateway.dto.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

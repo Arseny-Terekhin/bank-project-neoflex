@@ -1,8 +1,8 @@
 package org.example.gateway.service;
 
-import org.example.moduledto.dto.FinishRegistrationRequestDto;
-import org.example.moduledto.dto.LoanOfferDto;
-import org.example.moduledto.dto.LoanStatementRequestDto;
+import org.example.gateway.dto.FinishRegistrationRequestDto;
+import org.example.gateway.dto.LoanOfferDto;
+import org.example.gateway.dto.LoanStatementRequestDto;
 
 import java.util.List;
 

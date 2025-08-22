@@ -1,7 +1,7 @@
 package org.example.calculator.utils;
 
-import org.example.moduledto.dto.*;
-import org.example.moduledto.dto.enums.*;
+import org.example.calculator.dto.*;
+import org.example.calculator.dto.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

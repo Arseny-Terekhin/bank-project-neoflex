@@ -1,6 +1,6 @@
 package org.example.calculator.tests;
 
-import org.example.moduledto.dto.*;
+import org.example.calculator.dto.*;
 import org.example.calculator.utils.TestUtils;
 import org.example.calculator.service.impl.CalculatorCreditService;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package org.example.deal.service;
 
-import org.example.moduledto.dto.*;
+import org.example.deal.dto.*;
 
 import java.util.List;
 

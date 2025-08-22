@@ -3,7 +3,7 @@ package org.example.dossier.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dossier.service.MailSenderService;
-import org.example.moduledto.dto.EmailMessage;
+import org.example.dossier.dto.EmailMessage;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.example.dossier.service.KafkaConsumerService;
 import org.springframework.stereotype.Service;
